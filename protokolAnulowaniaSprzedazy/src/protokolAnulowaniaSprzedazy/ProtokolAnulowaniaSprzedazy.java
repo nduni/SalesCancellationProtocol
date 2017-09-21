@@ -16,6 +16,9 @@ import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.UIManager;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class ProtokolAnulowaniaSprzedazy {
 
@@ -456,58 +459,69 @@ public class ProtokolAnulowaniaSprzedazy {
 		frame.getContentPane().add(textField_62);
 		
 		JTextPane txtpnNazwaProduktu = new JTextPane();
+		txtpnNazwaProduktu.setBackground(UIManager.getColor("Button.background"));
 		txtpnNazwaProduktu.setText("Nazwa produktu");
 		txtpnNazwaProduktu.setBounds(33, 39, 86, 31);
 		frame.getContentPane().add(txtpnNazwaProduktu);
 		
 		JTextPane txtpnLp = new JTextPane();
+		txtpnLp.setBackground(UIManager.getColor("Button.background"));
 		txtpnLp.setText("L.p.");
 		txtpnLp.setBounds(10, 39, 25, 31);
 		frame.getContentPane().add(txtpnLp);
 		
 		JTextPane txtpnJm = new JTextPane();
+		txtpnJm.setBackground(UIManager.getColor("Button.background"));
 		txtpnJm.setText("J.m.");
 		txtpnJm.setBounds(116, 39, 25, 31);
 		frame.getContentPane().add(txtpnJm);
 		
 		JTextPane txtpnIlo = new JTextPane();
+		txtpnIlo.setBackground(UIManager.getColor("Button.background"));
 		txtpnIlo.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		txtpnIlo.setText("Ilo\u015B\u0107");
 		txtpnIlo.setBounds(140, 39, 25, 31);
 		frame.getContentPane().add(txtpnIlo);
 		
 		JTextPane txtpnCenaJednostkowaZ = new JTextPane();
+		txtpnCenaJednostkowaZ.setBackground(UIManager.getColor("Button.background"));
 		txtpnCenaJednostkowaZ.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		txtpnCenaJednostkowaZ.setText("Cena jednostkowa z podatkiem");
 		txtpnCenaJednostkowaZ.setBounds(164, 39, 86, 31);
 		frame.getContentPane().add(txtpnCenaJednostkowaZ);
 		
 		JTextPane txtpnWartoZPodatkiem = new JTextPane();
+		txtpnWartoZPodatkiem.setBackground(UIManager.getColor("Button.background"));
 		txtpnWartoZPodatkiem.setText("Warto\u015B\u0107 z podatkiem");
 		txtpnWartoZPodatkiem.setBounds(248, 39, 86, 31);
 		frame.getContentPane().add(txtpnWartoZPodatkiem);
 		
 		JTextPane txtpnVat = new JTextPane();
+		txtpnVat.setBackground(UIManager.getColor("Button.background"));
 		txtpnVat.setText("%");
 		txtpnVat.setBounds(332, 55, 25, 15);
 		frame.getContentPane().add(txtpnVat);
 		
 		JTextPane txtpnWTymPodatek = new JTextPane();
+		txtpnWTymPodatek.setBackground(UIManager.getColor("Button.background"));
 		txtpnWTymPodatek.setText("W tym podatek");
 		txtpnWTymPodatek.setBounds(332, 39, 110, 20);
 		frame.getContentPane().add(txtpnWTymPodatek);
 		
 		JTextPane txtpnKwota = new JTextPane();
+		txtpnKwota.setBackground(UIManager.getColor("Button.background"));
 		txtpnKwota.setText("Kwota");
 		txtpnKwota.setBounds(356, 55, 86, 15);
 		frame.getContentPane().add(txtpnKwota);
 		
 		JTextPane txtpnWarto = new JTextPane();
+		txtpnWarto.setBackground(UIManager.getColor("Button.background"));
 		txtpnWarto.setText("Warto\u015B\u0107 bez podatku");
 		txtpnWarto.setBounds(440, 39, 86, 31);
 		frame.getContentPane().add(txtpnWarto);
 		
 		JTextPane txtpnZestawienie = new JTextPane();
+		txtpnZestawienie.setBackground(UIManager.getColor("Button.background"));
 		txtpnZestawienie.setText("Zestawienie sprzeda\u017Cy wg stawek VAT");
 		txtpnZestawienie.setBounds(248, 222, 78, 97);
 		frame.getContentPane().add(txtpnZestawienie);
@@ -593,21 +607,25 @@ public class ProtokolAnulowaniaSprzedazy {
 		textField_78.setColumns(10);
 		
 		JTextPane txtpnUwagi = new JTextPane();
+		txtpnUwagi.setBackground(UIManager.getColor("Button.background"));
 		txtpnUwagi.setText("Uwagi:");
 		txtpnUwagi.setBounds(10, 222, 230, 20);
 		frame.getContentPane().add(txtpnUwagi);
 		
 		JTextPane txtpnWartociZ = new JTextPane();
+		txtpnWartociZ.setBackground(UIManager.getColor("Button.background"));
 		txtpnWartociZ.setText("Warto\u015Bci\u0105 z\u0142");
 		txtpnWartociZ.setBounds(10, 279, 65, 20);
 		frame.getContentPane().add(txtpnWartociZ);
 		
 		JTextPane txtpnSownie = new JTextPane();
+		txtpnSownie.setBackground(UIManager.getColor("Button.background"));
 		txtpnSownie.setText("s\u0142ownie:");
-		txtpnSownie.setBounds(10, 299, 65, 20);
+		txtpnSownie.setBounds(10, 299, 65, 15);
 		frame.getContentPane().add(txtpnSownie);
 		
 		JTextPane textPane = new JTextPane();
+		textPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane.setBounds(10, 317, 230, 20);
 		frame.getContentPane().add(textPane);
 		
@@ -616,60 +634,73 @@ public class ProtokolAnulowaniaSprzedazy {
 		frame.getContentPane().add(textPane_1);
 		
 		JTextPane textPane_2 = new JTextPane();
+		textPane_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_2.setBounds(73, 279, 92, 20);
 		frame.getContentPane().add(textPane_2);
 		
 		JTextPane textPane_3 = new JTextPane();
+		textPane_3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_3.setBounds(356, 320, 86, 20);
 		frame.getContentPane().add(textPane_3);
 		
 		JTextPane textPane_4 = new JTextPane();
+		textPane_4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_4.setBounds(440, 320, 86, 20);
 		frame.getContentPane().add(textPane_4);
 		
 		JTextPane txtpncznaWartoProtokou = new JTextPane();
+		txtpncznaWartoProtokou.setBackground(UIManager.getColor("Button.background"));
 		txtpncznaWartoProtokou.setText("\u0141\u0105czna warto\u015B\u0107 protoko\u0142u");
 		txtpncznaWartoProtokou.setBounds(356, 340, 170, 20);
 		frame.getContentPane().add(txtpncznaWartoProtokou);
 		
 		JTextPane txtpnZmniejszenieSprzedayBrutto = new JTextPane();
+		txtpnZmniejszenieSprzedayBrutto.setBackground(UIManager.getColor("Button.background"));
 		txtpnZmniejszenieSprzedayBrutto.setText("Zmniejszenie sprzeda\u017Cy brutto");
 		txtpnZmniejszenieSprzedayBrutto.setBounds(10, 360, 181, 20);
 		frame.getContentPane().add(txtpnZmniejszenieSprzedayBrutto);
 		
 		txtpnZmniejszenieSprzedayNetto = new JTextPane();
+		txtpnZmniejszenieSprzedayNetto.setBackground(UIManager.getColor("Button.background"));
 		txtpnZmniejszenieSprzedayNetto.setText("Zmniejszenie sprzeda\u017Cy netto");
 		txtpnZmniejszenieSprzedayNetto.setBounds(10, 400, 181, 20);
 		frame.getContentPane().add(txtpnZmniejszenieSprzedayNetto);
 		
 		txtpnZmniejszeniePodatkuPtu = new JTextPane();
+		txtpnZmniejszeniePodatkuPtu.setBackground(UIManager.getColor("Button.background"));
 		txtpnZmniejszeniePodatkuPtu.setText("Zmniejszenie podatku PTU");
 		txtpnZmniejszeniePodatkuPtu.setBounds(10, 380, 181, 20);
 		frame.getContentPane().add(txtpnZmniejszeniePodatkuPtu);
 		
 		textPane_5 = new JTextPane();
+		textPane_5.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_5.setBounds(201, 360, 41, 20);
 		frame.getContentPane().add(textPane_5);
 		
 		textPane_6 = new JTextPane();
+		textPane_6.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_6.setBounds(201, 380, 41, 20);
 		frame.getContentPane().add(textPane_6);
 		
 		textPane_7 = new JTextPane();
+		textPane_7.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPane_7.setBounds(201, 400, 41, 20);
 		frame.getContentPane().add(textPane_7);
 		
 		txtpnZaczonoParagon = new JTextPane();
+		txtpnZaczonoParagon.setBackground(UIManager.getColor("Button.background"));
 		txtpnZaczonoParagon.setText("Za\u0142\u0105czono paragon nr");
 		txtpnZaczonoParagon.setBounds(10, 431, 120, 20);
 		frame.getContentPane().add(txtpnZaczonoParagon);
 		
 		txtpnKasaNr = new JTextPane();
+		txtpnKasaNr.setBackground(UIManager.getColor("Button.background"));
 		txtpnKasaNr.setText("Kasa nr");
 		txtpnKasaNr.setBounds(10, 455, 52, 20);
 		frame.getContentPane().add(txtpnKasaNr);
 		
 		textField_79 = new JTextField();
+		textField_79.setBorder(new LineBorder(new Color(171, 173, 179)));
 		textField_79.setBounds(132, 431, 86, 20);
 		frame.getContentPane().add(textField_79);
 		textField_79.setColumns(10);
