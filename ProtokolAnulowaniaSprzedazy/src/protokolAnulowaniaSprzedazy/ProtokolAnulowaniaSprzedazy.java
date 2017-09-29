@@ -173,7 +173,7 @@ public class ProtokolAnulowaniaSprzedazy {
 		frame.getContentPane().add(textField_02);
 		textField_02.setColumns(10);
 
-		textField_03 = new JTextField(s);
+		textField_03 = new JTextField();
 		textField_03.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
