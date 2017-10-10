@@ -99,7 +99,7 @@ public class ProtokolAnulowaniaSprzedazy {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 20, 640, 660);
+		frame.setBounds(100, 20, 640, 640);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -137,9 +137,16 @@ public class ProtokolAnulowaniaSprzedazy {
 
 		JPanel seventhPanel = new JPanel();
 		JPanel totalSummary = new TotalSummaryPanel();
+		JPanel inWords = new InWordsPanel();
 		seventhPanel.setBounds(0, 400, 640, 130);
+		seventhPanel.setLayout(new BoxLayout(seventhPanel, BoxLayout.X_AXIS));
+		seventhPanel.add(inWords);
 		seventhPanel.add(totalSummary);
 		frame.getContentPane().add(seventhPanel);
+		
+		JPanel reciepeAndTillPanel = new ReciepeAndTillPanel();
+		reciepeAndTillPanel.setBounds(0, 530, 640, 40);
+		frame.getContentPane().add(reciepeAndTillPanel);
 		/**
 		 * textField_010 = new JTextField(); textField_010.setColumns(10);
 		 * textField_010.setBounds(385, 326, 25, 20);
@@ -190,65 +197,13 @@ public class ProtokolAnulowaniaSprzedazy {
 		 * frame.getContentPane().add(textField_042);
 		 */
 
-		JTextPane txtpnWartociZ = new JTextPane();
-		txtpnWartociZ.setBackground(UIManager.getColor("Button.background"));
-		txtpnWartociZ.setText("Warto\u015Bci\u0105 z\u0142");
-		txtpnWartociZ.setBounds(10, 411, 65, 20);
-		frame.getContentPane().add(txtpnWartociZ);
-
-		JTextPane txtpnSownie = new JTextPane();
-		txtpnSownie.setBackground(UIManager.getColor("Button.background"));
-		txtpnSownie.setText("s\u0142ownie:");
-		txtpnSownie.setBounds(20, 442, 65, 15);
-		frame.getContentPane().add(txtpnSownie);
-
-		JTextPane textPane = new JTextPane();
-		textPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPane.setBounds(12, 468, 230, 20);
-		frame.getContentPane().add(textPane);
-
-		JTextPane textPane_2 = new JTextPane();
-		textPane_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPane_2.setBounds(85, 411, 86, 20);
-		frame.getContentPane().add(textPane_2);
-
+		
 		
 
 
-		txtpnReciepeAdded = new JTextPane();
-		txtpnReciepeAdded.setBackground(UIManager.getColor("Button.background"));
-		txtpnReciepeAdded.setText("Za\u0142\u0105czono paragon nr");
-		txtpnReciepeAdded.setBounds(0, 551, 120, 20);
-		frame.getContentPane().add(txtpnReciepeAdded);
+		
 
-		txtpnTillNr = new JTextPane();
-		txtpnTillNr.setBackground(UIManager.getColor("Button.background"));
-		txtpnTillNr.setText("Kasa nr");
-		txtpnTillNr.setBounds(0, 582, 52, 20);
-		frame.getContentPane().add(txtpnTillNr);
-
-		textField_79 = new JTextField();
-		textField_79.setBorder(new LineBorder(new Color(171, 173, 179)));
-		textField_79.setBounds(131, 551, 86, 20);
-		frame.getContentPane().add(textField_79);
-		textField_79.setColumns(10);
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(67, 582, 150, 20);
-		frame.getContentPane().add(comboBox);
-
-		JLabel lblCashier = new JLabel("Nale\u017Cy uzna\u0107 kasjera:");
-		lblCashier.setBounds(10, 499, 105, 20);
-		frame.getContentPane().add(lblCashier);
-
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(119, 499, 123, 22);
-		frame.getContentPane().add(comboBox_1);
-
-		JTextPane txtpnTaxSummary = new JTextPane();
-		txtpnTaxSummary.setBounds(150, 500, 50, 100);
-		txtpnTaxSummary.setBackground(UIManager.getColor("Button.background"));
-		txtpnTaxSummary.setText("Zestawienie sprzeda\u017Cy wg stawek VAT");
+		
 
 	}
 }
