@@ -9,7 +9,7 @@ public class CommentsPanel extends JPanel {
 	JTextPane txtpnComments;
 	JTextField txtfdComments;
 	JTextPane txtpnTaxSummary;
-	
+	 
 	public CommentsPanel() {
 		super();
 		createComponents();
