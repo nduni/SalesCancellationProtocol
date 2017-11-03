@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
-
+ 
 public class CommentsPanel extends JPanel {
 	JTextPane txtpnComments;
 	JTextField txtfdComments;
