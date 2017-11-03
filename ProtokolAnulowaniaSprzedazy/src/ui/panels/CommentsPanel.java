@@ -1,4 +1,4 @@
-package protokolAnulowaniaSprzedazy;
+package ui.panels;
  
 import javax.swing.JPanel;
 import javax.swing.JTextField;

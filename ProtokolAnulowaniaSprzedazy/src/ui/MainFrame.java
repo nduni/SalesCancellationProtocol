@@ -1,4 +1,4 @@
-package protokolAnulowaniaSprzedazy;
+package ui;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -9,6 +9,17 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import ui.panels.CommentsPanel;
+import ui.panels.InWordsPanel;
+import ui.panels.MainInfoPanel;
+import ui.panels.MenuPanel;
+import ui.panels.ProductPanel;
+import ui.panels.ReciepeAndTillPanel;
+import ui.panels.TotalSummaryPanel;
+import ui.panels.VatSummaryPanel;
+import ui.panels.ReasonInfoPanel.ReasonInfoPanel;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -33,32 +44,18 @@ import java.util.Map;
 import java.awt.Component;
 import javax.swing.JLabel;
 
-public class ProtokolAnulowaniaSprzedazy {
+public class MainFrame {
 
 	private JFrame frame;
-	private Map<String, JPanel> panelMap;
-	private ArrayList<JPanel> panels;
+	//private Map<String, JPanel> panelMap;
+	private ArrayList<ProductPanel> panels;
+	private VatSummaryPanel vatSummaryPanel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProtokolAnulowaniaSprzedazy window = new ProtokolAnulowaniaSprzedazy();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public ProtokolAnulowaniaSprzedazy() {
+	public MainFrame() {
 		initialize();
 	}
 
@@ -71,7 +68,7 @@ public class ProtokolAnulowaniaSprzedazy {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		frame.setVisible(true);
 		// frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
 		JPanel menuBar = new MenuPanel();
 		menuBar.setBounds(0, 0, 400, 20);
@@ -85,19 +82,19 @@ public class ProtokolAnulowaniaSprzedazy {
 		reasonPanel.setBounds(0, 60, 640, 25);
 		frame.getContentPane().add(reasonPanel);
 
-		panelMap = new HashMap<String, JPanel>();
-		panels = new ArrayList<JPanel>();
+	//panelMap = new HashMap<String, JPanel>();
+		panels = new ArrayList<ProductPanel>();
 		for (int i = 1; i < 8; i++) {
-			JPanel productPanel = new ProductPanel();
+			JPanel productPanel = new ProductPanel(vatSummaryPanel);
 			productPanel.setBounds(10, (i * 20) + 80, 640, 25);
 			frame.getContentPane().add(productPanel);
-			panelMap.put("key" + i, productPanel);
-			panels.add(productPanel);
+		//	panelMap.put("key" + i, productPanel);
+			panels.add((ProductPanel) productPanel);
 		}
 
 		JPanel sixthPanel = new JPanel();
 		JPanel commentsPanel = new CommentsPanel();
-		JPanel vatSummaryPanel = new VatSummaryPanel();
+		vatSummaryPanel = new VatSummaryPanel(panels);
 		sixthPanel.setBounds(0, 300, 640, 100);
 		sixthPanel.setLayout(new BoxLayout(sixthPanel, BoxLayout.X_AXIS));
 
@@ -118,5 +115,9 @@ public class ProtokolAnulowaniaSprzedazy {
 		reciepeAndTillPanel.setBounds(0, 530, 640, 40);
 		frame.getContentPane().add(reciepeAndTillPanel);
 
+	}
+
+	public ArrayList<ProductPanel> getPanels() {
+		return panels;
 	}
 }

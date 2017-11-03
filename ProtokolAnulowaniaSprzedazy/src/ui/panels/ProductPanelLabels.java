@@ -1,4 +1,4 @@
-package protokolAnulowaniaSprzedazy;
+package ui.panels;
 
 import java.awt.Font;
 

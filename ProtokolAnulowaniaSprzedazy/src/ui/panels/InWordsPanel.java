@@ -1,7 +1,12 @@
-package protokolAnulowaniaSprzedazy;
+package ui.panels;
 
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,6 +15,8 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 public class InWordsPanel extends JPanel {
+	private static ArrayList<String> cashiersList;
+	private JComboBox cashier;
 	public InWordsPanel() {
 		super();
 		createComponents();
@@ -43,8 +50,25 @@ public class InWordsPanel extends JPanel {
 		lblCashier.setBounds(10, 88, 125, 20);
 		add(lblCashier);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(142, 87, 123, 22);
-		add(comboBox_1);
+		cashier = new JComboBox();
+		cashier.setBounds(142, 87, 123, 22);
+		addCashiers();
+		add(cashier);
+		
+		
+		
+	}
+
+	private void addCashiers() {
+		try {
+			FileInputStream fout = new FileInputStream("kasjerzy.bin");
+			ObjectInputStream stream = new ObjectInputStream(fout);
+			ArrayList<String> cashiersList = (ArrayList<String>) stream.readObject();
+			for (String s: cashiersList) {
+				cashier.addItem(s);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
 	}
 }

@@ -1,11 +1,10 @@
-package protokolAnulowaniaSprzedazy;
+package ui.panels;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 
 public class ProductPanel extends JPanel {
 	private JTextField ordinalNumber;
@@ -17,9 +16,11 @@ public class ProductPanel extends JPanel {
 	private JTextField taxPercent;
 	private JTextField amountOfTax;
 	private JTextField valueWithoutTax;
+	private VatSummaryPanel vatSummaryPanel;
 
-	public ProductPanel() {
+	public ProductPanel(VatSummaryPanel vatSummaryPanel) {
 		super();
+		this.vatSummaryPanel = vatSummaryPanel;
 		createComponents();
 	}
 
@@ -121,19 +122,23 @@ public class ProductPanel extends JPanel {
 		taxPercent.setText("23");
 		valueWithoutTax.setText(BigDecimal.valueOf(d / 1.23).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 		amountOfTax.setText(BigDecimal.valueOf(d - d / 1.23).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-		VatSummaryPanel.summarize();
+//		vatSummaryPanel.summarize();
 	}
 
-	public JTextField valueWithTax() {
-		return valueWithTax;
+	public double getValueWithTax() {
+		if (hasDouble(valueWithTax)) {
+			return Double.parseDouble(valueWithTax.getText());
+		} else {
+			return 0.0;
+		}
 	}
 
-	public JTextField taxPercent() {
-		return taxPercent;
+	public double getTaxPercent() {
+		return Double.parseDouble(taxPercent.getText());
 	}
 
-	public JTextField amountOfTax() {
-		return amountOfTax;
+	public double getAmountOfTax() {
+		return Double.parseDouble(amountOfTax.getText());
 	}
 
 	public JTextField valueWithoutTax() {
