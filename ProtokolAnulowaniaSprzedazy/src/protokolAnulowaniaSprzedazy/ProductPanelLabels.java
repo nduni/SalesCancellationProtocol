@@ -40,11 +40,11 @@ public class ProductPanelLabels extends JPanel{
 			pricePerUnit.setText("Cena jednostkowa z podatkiem");
 			pricePerUnit.setBounds(268, 0, 60, 48);
 
-			JTextPane valueWithTAX = new JTextPane();
-			valueWithTAX.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			valueWithTAX.setBackground(UIManager.getColor("Button.background"));
-			valueWithTAX.setText("Warto\u015B\u0107 z podatkiem");
-			valueWithTAX.setBounds(326, 0, 60, 40);
+			JTextPane valueWithTax = new JTextPane();
+			valueWithTax.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			valueWithTax.setBackground(UIManager.getColor("Button.background"));
+			valueWithTax.setText("Warto\u015B\u0107 z podatkiem");
+			valueWithTax.setBounds(326, 0, 60, 40);
 
 			JTextPane taxPercent = new JTextPane();
 			taxPercent.setBackground(UIManager.getColor("Button.background"));
@@ -73,7 +73,7 @@ public class ProductPanelLabels extends JPanel{
 			add(quantity);
 			add(unitOfMeasure);
 			add(pricePerUnit);
-			add(valueWithTAX);
+			add(valueWithTax);
 			add(taxPercent);
 			add(includingTax);
 			add(amountOfTax);
