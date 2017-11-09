@@ -1,4 +1,4 @@
-package ui.panels;
+package ui.panels.Menu;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -43,23 +43,33 @@ public class MenuPanel extends JPanel {
 		JMenuItem productsSource = new JMenuItem("Baza produkt\u00F3w");
 		settings.add(productsSource);
 
-		JMenuItem mntmKasjerzy = new JMenuItem("Kasjerzy");
-		mntmKasjerzy.addActionListener(new ActionListener() {
+		JMenuItem cashiersManager = new JMenuItem("Kasjerzy");
+		cashiersManager.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				manageCashierFrame();
 			}
 		});
-		settings.add(mntmKasjerzy);
+		settings.add(cashiersManager);
 
-		JMenuItem mntmEdycjaKasFiskalnych = new JMenuItem("Kasy fiskalne");
-		settings.add(mntmEdycjaKasFiskalnych);
+		JMenuItem tillsManager = new JMenuItem("Kasy fiskalne");
+		tillsManager.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				openTillsManager();				
+			}
+		});
+		settings.add(tillsManager);
 
-		JMenu mnPomoc = new JMenu("Pomoc");
-		menuBar.add(mnPomoc);
+		JMenu help = new JMenu("Pomoc");
+		menuBar.add(help);
 	}
 
 	protected void manageCashierFrame() {
-		CashierManager manager = new CashierManager();
+		CashiersManager manager = new CashiersManager();
 	}
-
+	private void openTillsManager() {
+		TillSManager manager = new TillSManager();
+		
+	}
 }

@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -15,8 +18,10 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 public class InWordsPanel extends JPanel {
+	
+
 	private static ArrayList<String> cashiersList;
-	private JComboBox cashier;
+	private JComboBox<Object> cashier;
 	public InWordsPanel() {
 		super();
 		createComponents();
@@ -50,25 +55,30 @@ public class InWordsPanel extends JPanel {
 		lblCashier.setBounds(10, 88, 125, 20);
 		add(lblCashier);
 
-		cashier = new JComboBox();
+		cashier = new JComboBox<Object>();
 		cashier.setBounds(142, 87, 123, 22);
-		addCashiers();
+		addCashiersToComboBox();
 		add(cashier);
 		
 		
 		
 	}
 
-	private void addCashiers() {
+	private void addCashiersToComboBox() {
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		DefaultComboBoxModel defaultModel = new DefaultComboBoxModel();
+		cashiersList = new ArrayList<String>(); 
 		try {
 			FileInputStream fout = new FileInputStream("kasjerzy.bin");
 			ObjectInputStream stream = new ObjectInputStream(fout);
-			ArrayList<String> cashiersList = (ArrayList<String>) stream.readObject();
-			for (String s: cashiersList) {
-				cashier.addItem(s);
+			model = (DefaultListModel<String>) stream.readObject();
+			cashiersList= Collections.list(model.elements());;
+			for (Object c:cashiersList) {
+			defaultModel.addElement(c);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}		
+		cashier.setModel(defaultModel);
 	}
 }

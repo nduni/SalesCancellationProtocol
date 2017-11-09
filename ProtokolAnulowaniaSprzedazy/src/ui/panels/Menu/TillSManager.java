@@ -1,4 +1,4 @@
-package ui.panels;
+package ui.panels.Menu;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -21,43 +21,43 @@ import java.io.ObjectOutputStream;
 
 import javax.swing.JScrollPane;
 
-public class CashierManager {
-	DefaultListModel model;
+public class TillSManager {
+	DefaultListModel<String> model;
 
-	public CashierManager() {
+	public TillSManager() {
 		JFrame frame = new JFrame();
 		frame.setVisible(true);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
-		model = new DefaultListModel<>();
+		model = new DefaultListModel<String>();
 		readFile();
 		JScrollPane scrollPane = new JScrollPane();
-		JList cashierList = new JList(model);
-		JButton addCashier = new JButton("Dodaj");
-		JTextField putCashier = new JTextField("");
+		JList tillList = new JList(model);
+		JButton addTill = new JButton("Dodaj");
+		JTextField putTill = new JTextField("");
 
-		JButton removeCashier = new JButton("Usuñ");
-		JButton saveCashiers = new JButton("Zapisz");
+		JButton removeTill = new JButton("Usuñ");
+		JButton saveTill = new JButton("Zapisz");
 
-		scrollPane.setViewportView(cashierList);
+		scrollPane.setViewportView(tillList);
 
 		DefaultListSelectionModel m = new DefaultListSelectionModel();
 		m.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		m.setLeadAnchorNotificationEnabled(false);
-		cashierList.setSelectionModel(m);
+		tillList.setSelectionModel(m);
 
-		addCashier.addActionListener(new ActionListener() {
+		addTill.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!putCashier.getText().isEmpty()) {
-					model.addElement(putCashier.getText());
-					cashierList.repaint();
-					putCashier.setText("");
+				if (!putTill.getText().isEmpty()) {
+					model.addElement(putTill.getText());
+					tillList.repaint();
+					putTill.setText("");
 				}
 			}
 		});
-		saveCashiers.addActionListener(new ActionListener() {
+		saveTill.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -65,7 +65,7 @@ public class CashierManager {
 
 			}
 		});
-		removeCashier.addActionListener(new ActionListener() {
+		removeTill.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,24 +74,24 @@ public class CashierManager {
 			}
 		});
 		frame.add(scrollPane);
-		frame.add(putCashier);
-		frame.add(addCashier);
-		frame.add(removeCashier);
-		frame.add(saveCashiers);
+		frame.add(putTill);
+		frame.add(addTill);
+		frame.add(removeTill);
+		frame.add(saveTill);
 		frame.pack();
 	}
 	public void readFile() {
 		try {
-			FileInputStream fout = new FileInputStream("kasjerzy.bin");
+			FileInputStream fout = new FileInputStream("kasy_fiskalne.bin");
 			ObjectInputStream stream = new ObjectInputStream(fout);
-			model = (DefaultListModel) stream.readObject();
+			model = (DefaultListModel<String>) stream.readObject();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
 	public void saveFile() {
 		try {
-			FileOutputStream fout = new FileOutputStream("kasjerzy.bin");
+			FileOutputStream fout = new FileOutputStream("kasy_fiskalne.bin");
 			ObjectOutputStream stream = new ObjectOutputStream(fout);
 			stream.writeObject(model);
 			fout.close();

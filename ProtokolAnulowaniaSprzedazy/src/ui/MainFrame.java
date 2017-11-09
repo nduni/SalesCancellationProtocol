@@ -13,11 +13,11 @@ import com.jgoodies.forms.layout.RowSpec;
 import ui.panels.CommentsPanel;
 import ui.panels.InWordsPanel;
 import ui.panels.MainInfoPanel;
-import ui.panels.MenuPanel;
 import ui.panels.ProductPanel;
 import ui.panels.ReciepeAndTillPanel;
 import ui.panels.TotalSummaryPanel;
 import ui.panels.VatSummaryPanel;
+import ui.panels.Menu.MenuPanel;
 import ui.panels.ReasonInfoPanel.ReasonInfoPanel;
 
 import com.jgoodies.forms.layout.FormSpecs;
