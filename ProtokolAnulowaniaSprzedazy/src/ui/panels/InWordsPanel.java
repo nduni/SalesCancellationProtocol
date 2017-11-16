@@ -62,6 +62,7 @@ public class InWordsPanel extends JPanel {
 		
 		
 		
+		
 	}
 
 	private void addCashiersToComboBox() {
@@ -80,5 +81,9 @@ public class InWordsPanel extends JPanel {
 			System.out.println(e);
 		}		
 		cashier.setModel(defaultModel);
+	}
+	public void redrawList() {
+		cashier.removeAllItems();
+		addCashiersToComboBox();
 	}
 }

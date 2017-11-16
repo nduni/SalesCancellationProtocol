@@ -3,8 +3,12 @@ package ui.panels;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import ui.MainFrame;
 
 public class ProductPanel extends JPanel {
 	private JTextField ordinalNumber;
@@ -17,7 +21,7 @@ public class ProductPanel extends JPanel {
 	private JTextField amountOfTax;
 	private JTextField valueWithoutTax;
 	private VatSummaryPanel vatSummaryPanel;
-
+	
 	public ProductPanel(VatSummaryPanel vatSummaryPanel) {
 		super();
 		this.vatSummaryPanel = vatSummaryPanel;
@@ -43,17 +47,16 @@ public class ProductPanel extends JPanel {
 		quantity.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0) {
 
 				if (hasDouble(pricePerUnit) && hasDouble(quantity)) {
 					multiplication(quantity, pricePerUnit);
 				} else {
-					valueWithTax.setText("");
-					amountOfTax.setText("");
-					valueWithoutTax.setText("");
-
+					leaveEmptyFields();
 				}
+				summingupProductPanel();
 			}
+
 		});
 
 		quantity.setBounds(240, 0, 25, 20);
@@ -62,15 +65,14 @@ public class ProductPanel extends JPanel {
 		pricePerUnit.addKeyListener(new KeyAdapter() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0) {
+			public void keyTyped(KeyEvent arg0) {
 
 				if (hasDouble(pricePerUnit) && hasDouble(quantity)) {
 					multiplication(quantity, pricePerUnit);
 				} else {
-					valueWithTax.setText("");
-					amountOfTax.setText("");
-					valueWithoutTax.setText("");
+					leaveEmptyFields();
 				}
+				summingupProductPanel();
 			}
 		});
 
@@ -114,15 +116,23 @@ public class ProductPanel extends JPanel {
 	}
 
 	public void multiplication(JTextField jTF1, JTextField jTF2) {
-		double d, d1, d2;
-		d1 = Double.parseDouble(jTF1.getText());
-		d2 = Double.parseDouble(jTF2.getText());
-		d = d1 * d2;
-		valueWithTax.setText(String.valueOf(d));
+		BigDecimal d1 = new BigDecimal(jTF1.getText());
+		BigDecimal d2 = new BigDecimal(jTF2.getText());
+		//d1 = Double.parseDouble(jTF1.getText());
+		//d2 = Double.parseDouble(jTF2.getText());
+		BigDecimal value = d1.multiply(d2);
+		BigDecimal tax = new BigDecimal(1.23);
+		valueWithTax.setText(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 		taxPercent.setText("23");
-		valueWithoutTax.setText(BigDecimal.valueOf(d / 1.23).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-		amountOfTax.setText(BigDecimal.valueOf(d - d / 1.23).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-//		vatSummaryPanel.summarize();
+		valueWithoutTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
+		amountOfTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
+	}
+
+	private void leaveEmptyFields() {
+		valueWithTax.setText("");
+		amountOfTax.setText("");
+		valueWithoutTax.setText("");
+
 	}
 
 	public double getValueWithTax() {
@@ -134,15 +144,46 @@ public class ProductPanel extends JPanel {
 	}
 
 	public double getTaxPercent() {
-		return Double.parseDouble(taxPercent.getText());
+		if (hasDouble(taxPercent)) {
+			return Double.parseDouble(taxPercent.getText());
+		} else {
+			return 0.0;
+		}
 	}
 
 	public double getAmountOfTax() {
-		return Double.parseDouble(amountOfTax.getText());
+		if (hasDouble(amountOfTax)) {
+			return Double.parseDouble(amountOfTax.getText());
+		} else {
+			return 0.0;
+		}
 	}
 
-	public JTextField valueWithoutTax() {
-		return valueWithoutTax;
+	public double valueWithoutTax() {
+		if (hasDouble(valueWithoutTax)) {
+			return Double.parseDouble(valueWithoutTax.getText());
+		} else {
+			return 0.0;
+		}
 	}
-
+	
+	public void summingupProductPanel() {
+		ArrayList<ProductPanel> productPanels = new ArrayList<ProductPanel>();
+		productPanels = MainFrame.getPanels();
+		double value = 0.0;
+		double tax = 0.0;
+		double net = 0.0;
+		for (ProductPanel p : productPanels) {
+			try {
+				value += p.getValueWithTax();
+				tax += p.getAmountOfTax();
+				net += p.valueWithoutTax();
+			} catch (NullPointerException e) {
+				
+			}
+		}
+		vatSummaryPanel.setValueSummary(String.valueOf(value));
+		vatSummaryPanel.setTaxSummary(String.valueOf(tax));
+		vatSummaryPanel.setValueWithoutTaxSummary(String.valueOf(net));
+	}
 }

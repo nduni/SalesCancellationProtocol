@@ -47,19 +47,6 @@ public class VatSummaryPanel extends JPanel {
 		add(valueWithoutTaxSummary);
 	}
 
-	public void summarize() {
-			
-			BigDecimal sum = new BigDecimal(0.0);
-			for (ProductPanel p : panels) {
-				if (((ProductPanel) p).getValueWithTax() != 0.0) {
-					sum.add(BigDecimal.valueOf(((ProductPanel) p).getValueWithTax()).setScale(2,
-							BigDecimal.ROUND_HALF_UP));
-				}
-			}
-			valueSummary.setText(String.valueOf(sum));
-		
-	}
-
 	public JTextField getValueSummary() {
 		return valueSummary;
 	}
@@ -72,24 +59,24 @@ public class VatSummaryPanel extends JPanel {
 		return taxPercent;
 	}
 
-	public void setTaxPercent(JTextField taxPercent) {
-		this.taxPercent = taxPercent;
+	public void setTaxPercent(String taxPercent) {
+		this.taxPercent.setText(taxPercent);
 	}
 
 	public JTextField getTaxSummary() {
 		return taxSummary;
 	}
 
-	public void setTaxSummary(JTextField taxSummary) {
-		this.taxSummary = taxSummary;
+	public void setTaxSummary(String taxSummary) {
+		this.taxSummary.setText(taxSummary);
 	}
 
 	public JTextField getValueWithoutTaxSummary() {
 		return valueWithoutTaxSummary;
 	}
 
-	public void setValueWithoutTaxSummary(JTextField valueWithoutTaxSummary) {
-		this.valueWithoutTaxSummary = valueWithoutTaxSummary;
+	public void setValueWithoutTaxSummary(String valueWithoutTaxSummary) {
+		this.valueWithoutTaxSummary.setText(valueWithoutTaxSummary);
 	}
-
+	
 }

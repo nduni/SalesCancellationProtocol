@@ -26,25 +26,25 @@ public class ProductPanelLabels extends JPanel{
 			JTextPane unitOfMeasure = new JTextPane();
 			unitOfMeasure.setBackground(UIManager.getColor("Button.background"));
 			unitOfMeasure.setText("J.m.");
-			unitOfMeasure.setBounds(217, 15, 25, 31);
+			unitOfMeasure.setBounds(215, 15, 25, 31);
 
 			JTextPane quantity = new JTextPane();
 			quantity.setBackground(UIManager.getColor("Button.background"));
 			quantity.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			quantity.setText("Ilo\u015B\u0107");
-			quantity.setBounds(243, 15, 25, 31);
+			quantity.setBounds(240, 15, 25, 31);
 
 			JTextPane pricePerUnit = new JTextPane();
 			pricePerUnit.setBackground(UIManager.getColor("Button.background"));
 			pricePerUnit.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			pricePerUnit.setText("Cena jednostkowa z podatkiem");
-			pricePerUnit.setBounds(268, 0, 60, 48);
+			pricePerUnit.setBounds(265, 0, 60, 48);
 
 			JTextPane valueWithTax = new JTextPane();
 			valueWithTax.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			valueWithTax.setBackground(UIManager.getColor("Button.background"));
 			valueWithTax.setText("Warto\u015B\u0107 z podatkiem");
-			valueWithTax.setBounds(326, 0, 60, 40);
+			valueWithTax.setBounds(325, 0, 60, 40);
 
 			JTextPane taxPercent = new JTextPane();
 			taxPercent.setBackground(UIManager.getColor("Button.background"));

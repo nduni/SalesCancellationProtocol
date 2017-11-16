@@ -14,6 +14,7 @@ import ui.panels.CommentsPanel;
 import ui.panels.InWordsPanel;
 import ui.panels.MainInfoPanel;
 import ui.panels.ProductPanel;
+import ui.panels.ProductPanelLabels;
 import ui.panels.ReciepeAndTillPanel;
 import ui.panels.TotalSummaryPanel;
 import ui.panels.VatSummaryPanel;
@@ -47,14 +48,20 @@ import javax.swing.JLabel;
 public class MainFrame {
 
 	private JFrame frame;
-	//private Map<String, JPanel> panelMap;
-	private ArrayList<ProductPanel> panels;
+	// private Map<String, JPanel> panelMap;
+	private static ArrayList<ProductPanel> productPanels;
 	private VatSummaryPanel vatSummaryPanel;
+	private MenuPanel menuBar;
+	private MainInfoPanel infoPanel;
+	private ReasonInfoPanel reasonPanel;
+	private JPanel sixthPanel;
+	private CommentsPanel commentsPanel;
+	private JPanel seventhPanel;
+	private TotalSummaryPanel totalSummary;
+	private InWordsPanel inWordsPanel;
+	private ReciepeAndTillPanel reciepeAndTillPanel;
+	private ProductPanelLabels productPanelLabels;
 
-
-	/**
-	 * Create the application.
-	 */
 	public MainFrame() {
 		initialize();
 	}
@@ -69,32 +76,35 @@ public class MainFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
-		// frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
-		JPanel menuBar = new MenuPanel();
+		inWordsPanel = new InWordsPanel();
+		menuBar = new MenuPanel(frame, inWordsPanel);
 		menuBar.setBounds(0, 0, 400, 20);
 		frame.getContentPane().add(menuBar);
 
-		JPanel infoPanel = new MainInfoPanel();
+		infoPanel = new MainInfoPanel();
 		infoPanel.setBounds(0, 30, 640, 25);
 		frame.getContentPane().add(infoPanel);
 
-		JPanel reasonPanel = new ReasonInfoPanel();
+		reasonPanel = new ReasonInfoPanel();
 		reasonPanel.setBounds(0, 60, 640, 25);
 		frame.getContentPane().add(reasonPanel);
-
-	//panelMap = new HashMap<String, JPanel>();
-		panels = new ArrayList<ProductPanel>();
+		productPanelLabels = new ProductPanelLabels();
+		productPanelLabels.setBounds(10, 85, 640, 48);
+		frame.getContentPane().add(productPanelLabels);
+		// panelMap = new HashMap<String, JPanel>();
+		productPanels = new ArrayList<ProductPanel>();
+		vatSummaryPanel = new VatSummaryPanel(productPanels);
 		for (int i = 1; i < 8; i++) {
 			JPanel productPanel = new ProductPanel(vatSummaryPanel);
-			productPanel.setBounds(10, (i * 20) + 80, 640, 25);
+			productPanel.setBounds(10, (i * 20) + 110, 640, 25);
 			frame.getContentPane().add(productPanel);
-		//	panelMap.put("key" + i, productPanel);
-			panels.add((ProductPanel) productPanel);
+			// panelMap.put("key" + i, productPanel);
+			productPanels.add((ProductPanel) productPanel);
 		}
 
-		JPanel sixthPanel = new JPanel();
-		JPanel commentsPanel = new CommentsPanel();
-		vatSummaryPanel = new VatSummaryPanel(panels);
+		sixthPanel = new JPanel();
+		commentsPanel = new CommentsPanel();
+
 		sixthPanel.setBounds(0, 300, 640, 100);
 		sixthPanel.setLayout(new BoxLayout(sixthPanel, BoxLayout.X_AXIS));
 
@@ -102,22 +112,27 @@ public class MainFrame {
 		sixthPanel.add(vatSummaryPanel);
 		frame.getContentPane().add(sixthPanel);
 
-		JPanel seventhPanel = new JPanel();
-		JPanel totalSummary = new TotalSummaryPanel();
-		JPanel inWords = new InWordsPanel();
+		seventhPanel = new JPanel();
+		totalSummary = new TotalSummaryPanel();
+
 		seventhPanel.setBounds(0, 400, 640, 130);
 		seventhPanel.setLayout(new BoxLayout(seventhPanel, BoxLayout.X_AXIS));
-		seventhPanel.add(inWords);
+		seventhPanel.add(inWordsPanel);
 		seventhPanel.add(totalSummary);
 		frame.getContentPane().add(seventhPanel);
 
-		JPanel reciepeAndTillPanel = new ReciepeAndTillPanel();
+		reciepeAndTillPanel = new ReciepeAndTillPanel();
 		reciepeAndTillPanel.setBounds(0, 530, 640, 40);
 		frame.getContentPane().add(reciepeAndTillPanel);
 
 	}
 
-	public ArrayList<ProductPanel> getPanels() {
-		return panels;
+	public static ArrayList<ProductPanel> getPanels() {
+		return productPanels;
 	}
+
+	public JPanel getInWords() {
+		return inWordsPanel;
+	}
+
 }

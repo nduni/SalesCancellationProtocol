@@ -10,12 +10,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ui.panels.InWordsPanel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 public class MenuPanel extends JPanel {
-	public MenuPanel() {
+	private JFrame mainFrame;
+	private InWordsPanel inWords;
+	
+	public MenuPanel(JFrame mainFrame, InWordsPanel inWords) {
 		super();
+		this.mainFrame = mainFrame;
+		this.inWords=inWords;
 		createComponents();
 	}
 
@@ -65,8 +71,8 @@ public class MenuPanel extends JPanel {
 		menuBar.add(help);
 	}
 
-	protected void manageCashierFrame() {
-		CashiersManager manager = new CashiersManager();
+	private void manageCashierFrame() {
+		CashiersManager manager = new CashiersManager(mainFrame, inWords );
 	}
 	private void openTillsManager() {
 		TillSManager manager = new TillSManager();
