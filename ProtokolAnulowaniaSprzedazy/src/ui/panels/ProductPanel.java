@@ -21,10 +21,12 @@ public class ProductPanel extends JPanel {
 	private JTextField amountOfTax;
 	private JTextField valueWithoutTax;
 	private VatSummaryPanel vatSummaryPanel;
+	private TotalSummaryPanel totalSummaryPanel;
 	
-	public ProductPanel(VatSummaryPanel vatSummaryPanel) {
+	public ProductPanel(VatSummaryPanel vatSummaryPanel, TotalSummaryPanel totalSummaryPanel) {
 		super();
 		this.vatSummaryPanel = vatSummaryPanel;
+		this.totalSummaryPanel=totalSummaryPanel;
 		createComponents();
 	}
 
@@ -73,6 +75,7 @@ public class ProductPanel extends JPanel {
 					leaveEmptyFields();
 				}
 				summingupProductPanel();
+				totalSummaryPanel.summarizeVat();
 			}
 		});
 
@@ -124,8 +127,8 @@ public class ProductPanel extends JPanel {
 		BigDecimal tax = new BigDecimal(1.23);
 		valueWithTax.setText(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 		taxPercent.setText("23");
+		amountOfTax.setText(value.subtract(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP)).toString());
 		valueWithoutTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
-		amountOfTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
 	}
 
 	private void leaveEmptyFields() {
