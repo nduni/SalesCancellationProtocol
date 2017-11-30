@@ -15,11 +15,11 @@ public class VatSummaryPanel extends JPanel {
 	private JTextField taxPercent;
 	private JTextField taxSummary;
 	private JTextField valueWithoutTaxSummary;
-	private ArrayList<ProductPanel> panels;
+	//private ArrayList<ProductPanel> panels;
 
-	public VatSummaryPanel(ArrayList<ProductPanel> panels) {
+	public VatSummaryPanel() {
 		super();
-		this.panels = panels;
+		//this.panels = panels;
 		createComponents();
 	}
 

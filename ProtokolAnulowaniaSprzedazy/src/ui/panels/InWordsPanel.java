@@ -22,6 +22,8 @@ public class InWordsPanel extends JPanel {
 
 	private static ArrayList<String> cashiersList;
 	private JComboBox<Object> cashier;
+	private JTextPane inWords;
+	private JTextPane amount;
 	public InWordsPanel() {
 		super();
 		createComponents();
@@ -29,11 +31,11 @@ public class InWordsPanel extends JPanel {
 
 	private void createComponents() {
 		setLayout(null);
-		JTextPane txtpnWartociZ = new JTextPane();
-		txtpnWartociZ.setBackground(UIManager.getColor("Button.background"));
-		txtpnWartociZ.setText("Warto\u015Bci\u0105 z\u0142");
-		txtpnWartociZ.setBounds(10, 10, 65, 20);
-		add(txtpnWartociZ);
+		JTextPane value = new JTextPane();
+		value.setBackground(UIManager.getColor("Button.background"));
+		value.setText("Warto\u015Bci\u0105 z\u0142");
+		value.setBounds(10, 10, 65, 20);
+		add(value);
 
 		JTextPane txtpnSownie = new JTextPane();
 		txtpnSownie.setBackground(UIManager.getColor("Button.background"));
@@ -41,15 +43,15 @@ public class InWordsPanel extends JPanel {
 		txtpnSownie.setBounds(10, 40, 65, 20);
 		add(txtpnSownie);
 
-		JTextPane textPane = new JTextPane();
-		textPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPane.setBounds(10, 60, 255, 20);
-		add(textPane);
+		inWords = new JTextPane();
+		inWords.setBorder(new LineBorder(new Color(0, 0, 0)));
+		inWords.setBounds(10, 60, 255, 20);
+		add(inWords);
 
-		JTextPane textPane_2 = new JTextPane();
-		textPane_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPane_2.setBounds(85, 10, 86, 20);
-		add(textPane_2);
+		amount = new JTextPane();
+		amount.setBorder(new LineBorder(new Color(0, 0, 0)));
+		amount.setBounds(85, 10, 86, 20);
+		add(amount);
 		
 		JLabel lblCashier = new JLabel("Nale\u017Cy uzna\u0107 kasjera:");
 		lblCashier.setBounds(10, 88, 125, 20);
@@ -85,5 +87,11 @@ public class InWordsPanel extends JPanel {
 	public void redrawList() {
 		cashier.removeAllItems();
 		addCashiersToComboBox();
+	}
+	public void setInWords(String s) {
+		inWords.setText(s);
+	}
+	public void setAmount(String a) {
+		amount.setText(a);
 	}
 }

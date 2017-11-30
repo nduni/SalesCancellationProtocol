@@ -1,14 +1,16 @@
-package ui.panels;
+package ui.panels.ProductPanel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+import java.util.function.DoubleToIntFunction;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import ui.MainFrame;
+import ui.panels.InWordsPanel;
+import ui.panels.TotalSummaryPanel;
+import ui.panels.VatSummaryPanel;
 
 public class ProductPanel extends JPanel {
 	private JTextField ordinalNumber;
@@ -21,10 +23,15 @@ public class ProductPanel extends JPanel {
 	private JTextField amountOfTax;
 	private JTextField valueWithoutTax;
 	private VatSummaryPanel vatSummaryPanel;
+	private InWordsPanel inWordsPanel;
+	private TotalSummaryPanel totalSummaryPanel;
+	private double value;
 	
-	public ProductPanel(VatSummaryPanel vatSummaryPanel) {
+	public ProductPanel(VatSummaryPanel vatSummaryPanel, InWordsPanel inWordsPanel, TotalSummaryPanel totalSummaryPanel) {
 		super();
 		this.vatSummaryPanel = vatSummaryPanel;
+		this.inWordsPanel = inWordsPanel;
+		this.totalSummaryPanel = totalSummaryPanel;
 		createComponents();
 	}
 
@@ -73,7 +80,11 @@ public class ProductPanel extends JPanel {
 					leaveEmptyFields();
 				}
 				summingupProductPanel();
+				totalSummaryPanel.summarizeVat();
+				amountInWords();
 			}
+
+			
 		});
 
 		pricePerUnit.setBounds(265, 0, 60, 20);
@@ -125,9 +136,15 @@ public class ProductPanel extends JPanel {
 		valueWithTax.setText(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 		taxPercent.setText("23");
 		valueWithoutTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
-		amountOfTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
+		amountOfTax.setText(value.subtract(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP)).toString());
 	}
 
+	private void amountInWords() {
+		String s = NumberInWords.convert((int)value);
+		inWordsPanel.setInWords(s);
+		inWordsPanel.setAmount(Double.toString(value));
+		
+	}
 	private void leaveEmptyFields() {
 		valueWithTax.setText("");
 		amountOfTax.setText("");
@@ -170,7 +187,7 @@ public class ProductPanel extends JPanel {
 	public void summingupProductPanel() {
 		ArrayList<ProductPanel> productPanels = new ArrayList<ProductPanel>();
 		productPanels = MainFrame.getPanels();
-		double value = 0.0;
+		value = 0.0;
 		double tax = 0.0;
 		double net = 0.0;
 		for (ProductPanel p : productPanels) {

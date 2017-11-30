@@ -13,12 +13,12 @@ import com.jgoodies.forms.layout.RowSpec;
 import ui.panels.CommentsPanel;
 import ui.panels.InWordsPanel;
 import ui.panels.MainInfoPanel;
-import ui.panels.ProductPanel;
 import ui.panels.ProductPanelLabels;
 import ui.panels.ReciepeAndTillPanel;
 import ui.panels.TotalSummaryPanel;
 import ui.panels.VatSummaryPanel;
 import ui.panels.Menu.MenuPanel;
+import ui.panels.ProductPanel.ProductPanel;
 import ui.panels.ReasonInfoPanel.ReasonInfoPanel;
 
 import com.jgoodies.forms.layout.FormSpecs;
@@ -54,9 +54,9 @@ public class MainFrame {
 	private MenuPanel menuBar;
 	private MainInfoPanel infoPanel;
 	private ReasonInfoPanel reasonPanel;
-	private JPanel sixthPanel;
+	private JPanel commentAndVatSummaryPanel;
 	private CommentsPanel commentsPanel;
-	private JPanel seventhPanel;
+	private JPanel totalSummaryAndInWordsPanel;
 	private TotalSummaryPanel totalSummary;
 	private InWordsPanel inWordsPanel;
 	private ReciepeAndTillPanel reciepeAndTillPanel;
@@ -78,50 +78,51 @@ public class MainFrame {
 		frame.setVisible(true);
 		inWordsPanel = new InWordsPanel();
 		menuBar = new MenuPanel(frame, inWordsPanel);
+		infoPanel = new MainInfoPanel();
+		reasonPanel = new ReasonInfoPanel();
+		productPanels = new ArrayList<ProductPanel>();
+		vatSummaryPanel = new VatSummaryPanel();
+		commentAndVatSummaryPanel = new JPanel();
+		commentsPanel = new CommentsPanel();
+		productPanelLabels = new ProductPanelLabels();
+		totalSummaryAndInWordsPanel = new JPanel();
+		totalSummary = new TotalSummaryPanel(vatSummaryPanel);
+		reciepeAndTillPanel = new ReciepeAndTillPanel();
+
 		menuBar.setBounds(0, 0, 400, 20);
 		frame.getContentPane().add(menuBar);
 
-		infoPanel = new MainInfoPanel();
 		infoPanel.setBounds(0, 30, 640, 25);
 		frame.getContentPane().add(infoPanel);
 
-		reasonPanel = new ReasonInfoPanel();
 		reasonPanel.setBounds(0, 60, 640, 25);
 		frame.getContentPane().add(reasonPanel);
-		productPanelLabels = new ProductPanelLabels();
+		
 		productPanelLabels.setBounds(10, 85, 640, 48);
 		frame.getContentPane().add(productPanelLabels);
 		// panelMap = new HashMap<String, JPanel>();
-		productPanels = new ArrayList<ProductPanel>();
-		vatSummaryPanel = new VatSummaryPanel(productPanels);
+	
 		for (int i = 1; i < 8; i++) {
-			JPanel productPanel = new ProductPanel(vatSummaryPanel);
+			JPanel productPanel = new ProductPanel(vatSummaryPanel, inWordsPanel, totalSummary);
 			productPanel.setBounds(10, (i * 20) + 110, 640, 25);
 			frame.getContentPane().add(productPanel);
 			// panelMap.put("key" + i, productPanel);
 			productPanels.add((ProductPanel) productPanel);
 		}
 
-		sixthPanel = new JPanel();
-		commentsPanel = new CommentsPanel();
+		commentAndVatSummaryPanel.setBounds(0, 300, 640, 100);
+		commentAndVatSummaryPanel.setLayout(new BoxLayout(commentAndVatSummaryPanel, BoxLayout.X_AXIS));
 
-		sixthPanel.setBounds(0, 300, 640, 100);
-		sixthPanel.setLayout(new BoxLayout(sixthPanel, BoxLayout.X_AXIS));
+		commentAndVatSummaryPanel.add(commentsPanel);
+		commentAndVatSummaryPanel.add(vatSummaryPanel);
+		frame.getContentPane().add(commentAndVatSummaryPanel);
 
-		sixthPanel.add(commentsPanel);
-		sixthPanel.add(vatSummaryPanel);
-		frame.getContentPane().add(sixthPanel);
+		totalSummaryAndInWordsPanel.setBounds(0, 400, 640, 130);
+		totalSummaryAndInWordsPanel.setLayout(new BoxLayout(totalSummaryAndInWordsPanel, BoxLayout.X_AXIS));
+		totalSummaryAndInWordsPanel.add(inWordsPanel);
+		totalSummaryAndInWordsPanel.add(totalSummary);
+		frame.getContentPane().add(totalSummaryAndInWordsPanel);
 
-		seventhPanel = new JPanel();
-		totalSummary = new TotalSummaryPanel();
-
-		seventhPanel.setBounds(0, 400, 640, 130);
-		seventhPanel.setLayout(new BoxLayout(seventhPanel, BoxLayout.X_AXIS));
-		seventhPanel.add(inWordsPanel);
-		seventhPanel.add(totalSummary);
-		frame.getContentPane().add(seventhPanel);
-
-		reciepeAndTillPanel = new ReciepeAndTillPanel();
 		reciepeAndTillPanel.setBounds(0, 530, 640, 40);
 		frame.getContentPane().add(reciepeAndTillPanel);
 
