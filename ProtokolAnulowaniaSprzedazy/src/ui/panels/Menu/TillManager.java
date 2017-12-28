@@ -17,16 +17,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import ui.panels.InWordsPanel;
+import ui.panels.ReciepeAndTillPanel;
 
-public class CashiersManager {
+public class TillManager {
 
 	DefaultListModel<String> model;
-	private InWordsPanel inWordsPanel;
+	private ReciepeAndTillPanel reciepeAndTillPanel;
 	private JFrame mainFrame;
 
-	public CashiersManager(JFrame mainFrame, InWordsPanel inWordsPanel) {
-		this.inWordsPanel = inWordsPanel;
+	public TillManager(JFrame mainFrame, ReciepeAndTillPanel reciepeAndTillPanel) {
+		this.reciepeAndTillPanel = reciepeAndTillPanel;
 		this.mainFrame = mainFrame;
 		JFrame frame = new JFrame();
 		frame.setVisible(true);
@@ -38,9 +38,9 @@ public class CashiersManager {
 
 				frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 				mainFrame.setEnabled(true);
-				inWordsPanel.redrawList();
-				inWordsPanel.revalidate();
-				inWordsPanel.repaint();
+				reciepeAndTillPanel.redrawList();
+				reciepeAndTillPanel.revalidate();
+				reciepeAndTillPanel.repaint();
 			}
 		});
 
@@ -48,31 +48,31 @@ public class CashiersManager {
 		model = new DefaultListModel<String>();
 		readFile();
 		JScrollPane scrollPane = new JScrollPane();
-		JList cashierList = new JList(model);
-		JButton addCashier = new JButton("Dodaj");
-		JTextField putCashier = new JTextField("");
+		JList tillsList = new JList(model);
+		JButton addTill = new JButton("Dodaj");
+		JTextField putTill = new JTextField("");
 
-		JButton removeCashier = new JButton("Usuñ");
-		JButton saveCashiers = new JButton("Zapisz");
+		JButton removeTill = new JButton("Usuñ");
+		JButton saveTill = new JButton("Zapisz");
 
-		scrollPane.setViewportView(cashierList);
+		scrollPane.setViewportView(tillsList);
 
 		DefaultListSelectionModel m = new DefaultListSelectionModel();
 		m.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		m.setLeadAnchorNotificationEnabled(false);
-		cashierList.setSelectionModel(m);
+		tillsList.setSelectionModel(m);
 
-		addCashier.addActionListener(new ActionListener() {
+		addTill.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!putCashier.getText().isEmpty()) {
-					model.addElement(putCashier.getText());
-					putCashier.setText("");
+				if (!putTill.getText().isEmpty()) {
+					model.addElement(putTill.getText());
+					putTill.setText("");
 				}
 			}
 		});
-		saveCashiers.addActionListener(new ActionListener() {
+		saveTill.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -80,27 +80,27 @@ public class CashiersManager {
 
 			}
 		});
-		removeCashier.addActionListener(new ActionListener() {
+		removeTill.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (model.getSize() > 0) {
-					int selectedIndex = cashierList.getSelectedIndex();
+					int selectedIndex = tillsList.getSelectedIndex();
 					model.remove(selectedIndex);
 				}
 			}
 		});
 		frame.add(scrollPane);
-		frame.add(putCashier);
-		frame.add(addCashier);
-		frame.add(removeCashier);
-		frame.add(saveCashiers);
+		frame.add(putTill);
+		frame.add(addTill);
+		frame.add(removeTill);
+		frame.add(saveTill);
 		frame.pack();
 	}
 
 	public void readFile() {
 		try {
-			FileInputStream fout = new FileInputStream("kasjerzy.bin");
+			FileInputStream fout = new FileInputStream("kasy_fiskalne.bin");
 			ObjectInputStream stream = new ObjectInputStream(fout);
 			model = (DefaultListModel<String>) stream.readObject();
 		} catch (Exception e) {
@@ -110,12 +110,11 @@ public class CashiersManager {
 
 	public void saveFile() {
 		try {
-			FileOutputStream fout = new FileOutputStream("kasjerzy.bin");
-			ObjectOutputStream stream = new ObjectOutputStream(fout);
+			FileOutputStream fot = new FileOutputStream("kasy_fiskalne.bin");
+			ObjectOutputStream stream = new ObjectOutputStream(fot);
 			stream.writeObject(model);
-			fout.close();
+			fot.close();
 
-			// inWordsPanel.redrawList();
 			System.out.println("saved");
 		} catch (Exception e) {
 			e.printStackTrace();

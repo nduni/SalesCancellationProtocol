@@ -1,27 +1,26 @@
 package ui.panels.Menu;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import ui.panels.InWordsPanel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import ui.panels.ReciepeAndTillPanel;
 public class MenuPanel extends JPanel {
 	private JFrame mainFrame;
 	private InWordsPanel inWords;
+	private ReciepeAndTillPanel ratPanel;
 	
-	public MenuPanel(JFrame mainFrame, InWordsPanel inWords) {
+	public MenuPanel(JFrame mainFrame, InWordsPanel inWords, ReciepeAndTillPanel ratPanel) {
 		super();
 		this.mainFrame = mainFrame;
 		this.inWords=inWords;
+		this.ratPanel=ratPanel;
 		createComponents();
 	}
 
@@ -75,7 +74,7 @@ public class MenuPanel extends JPanel {
 		CashiersManager manager = new CashiersManager(mainFrame, inWords );
 	}
 	private void openTillsManager() {
-		TillSManager manager = new TillSManager();
+		TillManager manager = new TillManager(mainFrame, ratPanel);
 		
 	}
 }

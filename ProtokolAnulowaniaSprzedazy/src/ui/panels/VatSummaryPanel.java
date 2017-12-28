@@ -1,25 +1,18 @@
 package ui.panels;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import ui.MainFrame;
 
 public class VatSummaryPanel extends JPanel {
 	private JTextField valueSummary;
 	private JTextField taxPercent;
 	private JTextField taxSummary;
 	private JTextField valueWithoutTaxSummary;
-	private ArrayList<ProductPanel> panels;
+	//private ArrayList<ProductPanel> panels;
 
-	public VatSummaryPanel(ArrayList<ProductPanel> panels) {
+	public VatSummaryPanel() {
 		super();
-		this.panels = panels;
+		//this.panels = panels;
 		createComponents();
 	}
 
