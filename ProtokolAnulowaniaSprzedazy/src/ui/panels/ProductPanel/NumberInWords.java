@@ -1,7 +1,9 @@
 package ui.panels.ProductPanel;
 
-public class NumberInWords {
+import java.math.BigDecimal;
 
+public class NumberInWords {
+	private int n;
 	public static final String[] units = { "", "jeden", "dwa", "trzy", "cztery", "piêæ", "szeœæ", "siedem", "osiem",
 			"dziewiêæ", "dziesiêæ", "jedenaœcie", "dwanaœce", "trzynaœcie", "czternaœcie", "piêtnaœcie", "szesnaœcie",
 			"siedemnaœcie", "osiemnaœcie", "dziewiêtnaœcie" };
@@ -12,9 +14,9 @@ public class NumberInWords {
 	public static final String[] hundreds = { "", "sto", "dwieœcie ", "trzysta ", "czterysta ", "piêæset ", "szeœæset ",
 			"siedemset ", "osiemset ", "dziewiêæset ", };
 
-	public static String convert(final int n) {
+	public static String convertInteger(final int n) {
 		if (n < 0) {
-			return "Minus " + convert(-n);
+			return "Minus " + convertInteger(-n);
 		}
 
 		if (n < 20) {
@@ -26,10 +28,10 @@ public class NumberInWords {
 		}
 
 		if (n < 1000) {
-			return hundreds[n / 100] + ((n % 100 != 0) ? " " : "") + convert(n % 100);
+			return hundreds[n / 100] + ((n % 100 != 0) ? " " : "") + convertInteger(n % 100);
 		}
 		if (n < 10000) {
-			return convert(n / 1000) + thousandChecking(n) + ((n % 10000 != 0) ? " " : "") + convert(n % 1000);
+			return convertInteger(n / 1000) + thousandChecking(n) + ((n % 10000 != 0) ? " " : "") + convertInteger(n % 1000);
 		}
 		return "";
 	}
@@ -43,6 +45,24 @@ public class NumberInWords {
 		} else {
 			return " tysiêcy";
 		}
+	}
+
+	public static String convert(BigDecimal value) {
+		BigDecimal val = value;
+		BigDecimal i= new BigDecimal(val.intValue());
+		val = val.subtract(i);
+		String s = val.toString();
+		if (s.length()==3) {
+			s = s+"0";
+		s = s.substring(s.length()-2,s.length());
+		}
+		else if (s.length()>=4){
+		s=	s.substring(s.length()-2,s.length());
+		}
+		else if (s.length()<3) {
+			s = "00";
+		}
+		return convertInteger(i.intValue()) +" "+s+"/100";
 	}
 
 }

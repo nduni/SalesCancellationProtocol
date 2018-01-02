@@ -26,7 +26,7 @@ public class ProductPanel extends JPanel {
 	private VatSummaryPanel vatSummaryPanel;
 	private InWordsPanel inWordsPanel;
 	private TotalSummaryPanel totalSummaryPanel;
-	private double value;
+	private BigDecimal valueToWord;
 	
 	public ProductPanel(VatSummaryPanel vatSummaryPanel, InWordsPanel inWordsPanel, TotalSummaryPanel totalSummaryPanel) {
 		super();
@@ -141,9 +141,9 @@ public class ProductPanel extends JPanel {
 	}
 
 	private void amountInWords() {
-		String s = NumberInWords.convert((int)value);
+		String s = NumberInWords.convert(valueToWord);
 		inWordsPanel.setInWords(s);
-		inWordsPanel.setAmount(Double.toString(value));
+		inWordsPanel.setAmount(valueToWord.toString());
 		
 	}
 	private void leaveEmptyFields() {
@@ -152,28 +152,35 @@ public class ProductPanel extends JPanel {
 		valueWithoutTax.setText("");
 
 	}
-
+/**
 	public double getValueWithTax() {
 		if (hasDouble(valueWithTax)) {
 			return Double.parseDouble(valueWithTax.getText());
 		} else {
 			return 0.0;
 		}
-	}
-
-	public double getTaxPercent() {
-		if (hasDouble(taxPercent)) {
-			return Double.parseDouble(taxPercent.getText());
+		}
+		*/
+	public String getValueWithTax() {
+		if (hasDouble(valueWithTax)) {
+			return valueWithTax.getText();
 		} else {
-			return 0.0;
+			return "";
+		}
+	}
+	public String getTaxPercent() {
+		if (hasDouble(taxPercent)) {
+			return taxPercent.getText();
+		} else {
+			return "";
 		}
 	}
 
-	public BigDecimal getAmountOfTax() {
+	public String getAmountOfTax() {
 		if (hasDouble(amountOfTax)) {
-			return new BigDecimal(amountOfTax.getText());
+			return amountOfTax.getText();
 		} else {
-			return new BigDecimal(0.0);
+			return "";
 		}
 	}
 
@@ -213,8 +220,8 @@ public class ProductPanel extends JPanel {
 		return totalSummaryPanel;
 	}
 
-	public double getValue() {
-		return value;
+	public BigDecimal getValue() {
+		return valueToWord;
 	}
 
 	public BigDecimal valueWithoutTax() {
@@ -228,13 +235,13 @@ public class ProductPanel extends JPanel {
 	public void summingupProductPanel() {
 		ArrayList<ProductPanel> productPanels = new ArrayList<ProductPanel>();
 		productPanels = MainFrame.getProductPanels();
-		value = 0.0;
+		BigDecimal value =new BigDecimal(0.0);
 		BigDecimal tax = new BigDecimal(0.0);
 		BigDecimal net = new BigDecimal(0.0);
 		for (ProductPanel p : productPanels) {
 			try {
-				value += p.getValueWithTax();
-				tax = tax.add(p.getAmountOfTax());
+				value = value.add(new BigDecimal(notNull(p.getValueWithTax())));
+				tax = tax.add(new BigDecimal(notNull(p.getAmountOfTax())));
 				net =net.add(p.valueWithoutTax());
 			} catch (NullPointerException e) {
 				
@@ -243,5 +250,16 @@ public class ProductPanel extends JPanel {
 		vatSummaryPanel.setValueSummary(String.valueOf(value));
 		vatSummaryPanel.setTaxSummary(String.valueOf(tax));
 		vatSummaryPanel.setValueWithoutTaxSummary(String.valueOf(net));
+		vatSummaryPanel.setTaxPercent(getTaxPercent());
+		this.valueToWord=value;
+	}
+
+	private String notNull(String valueWithTax2) {
+			if (valueWithTax2.equals("")) {
+		return "0";
+			}
+			else {
+				return  valueWithTax2;
+			}
 	}
 }

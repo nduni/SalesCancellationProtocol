@@ -86,12 +86,11 @@ public class PdfCreator {
 		PdfPTable t2 = new PdfPTable(1);
 		PdfPCell cell2 = new PdfPCell(t2);
 		PdfPCell cell3 = new PdfPCell(new Phrase(
-				infoPanel.getCity() + "                                    " + infoPanel.getTimeSpinner(), polishFont));
+				infoPanel.getCity() + "                                                                                  " + infoPanel.getTimeSpinner(), polishFont3));
 		PdfPCell cell4 = new PdfPCell(
-				new Phrase(infoPanel.getLblProtocol() + "                            " + infoPanel.getProtocolNumber(),
-						polishFont));
+				new Phrase(infoPanel.getLblProtocol() + "                            " + infoPanel.getProtocolNumber(),polishFont3));
 		PdfPCell cell5 = new PdfPCell(
-				new Phrase(reasonPanel.getLblReason() + " : " + reasonPanel.getReasonComboBox(), polishFont));
+				new Phrase(reasonPanel.getLblReason() + " : " + reasonPanel.getReasonComboBox(), polishFont3));
 		t2.addCell(cell4);
 		t2.addCell(cell3);
 		t2.addCell(cell5);
@@ -143,7 +142,7 @@ public class PdfCreator {
 			t4.addCell(panels.get(a).getQuantity().getText());
 			t4.addCell(panels.get(a).getPricePerUnit().getText());
 			t4.addCell(String.valueOf(panels.get(a).getValueWithTax()));
-			t4.addCell(String.valueOf((int) panels.get(a).getTaxPercent()));
+			t4.addCell(panels.get(a).getTaxPercent());
 			t4.addCell(String.valueOf(panels.get(a).getAmountOfTax()));
 			t4.addCell(panels.get(a).getValueWithoutTax().getText());
 		}

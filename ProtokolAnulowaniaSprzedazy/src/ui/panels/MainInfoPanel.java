@@ -1,6 +1,8 @@
 package ui.panels;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.swing.JLabel;
@@ -8,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.xml.bind.DatatypeConverter;
 
 public class MainInfoPanel extends JPanel {
 	private JSpinner timeSpinner;
@@ -51,7 +54,7 @@ public class MainInfoPanel extends JPanel {
 	}
 
 	public String getTimeSpinner() {
-		return timeSpinner.getValue()+"";
+	return	new SimpleDateFormat("dd/MM/yyyy").format(timeSpinner.getValue());
 	}
 
 	public String getCity() {
