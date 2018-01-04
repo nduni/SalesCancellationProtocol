@@ -79,7 +79,7 @@ public class ReciepeAndTillPanel extends JPanel {
 	}
 
 	public String getTillNr() {
-		return tillNr.getSelectedItem().toString();
+		return tillNr.getSelectedItem()+"";
 	}
 
 	public String getTxtpnReciepeAdded() {

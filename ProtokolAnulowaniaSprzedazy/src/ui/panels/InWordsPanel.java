@@ -98,7 +98,7 @@ public class InWordsPanel extends JPanel {
 	}
 
 	public String getCashier() {
-		return cashier.getSelectedItem().toString();
+		return cashier.getSelectedItem()+"";
 	}
 
 	public String getInWords() {

@@ -1,11 +1,10 @@
 package document;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -47,7 +46,8 @@ public class PdfCreator {
 
 	public PdfCreator(MainInfoPanel infoPanel, ReasonInfoPanel reasonPanel, CommentsPanel commentsPanel,
 			ProductPanelLabels productPanelLabels, TotalSummaryPanel totalSummary, VatSummaryPanel vatSummaryPanel,
-			ReciepeAndTillPanel reciepeAndTillPanel, InWordsPanel inWordsPanel) throws IOException, DocumentException {
+			ReciepeAndTillPanel reciepeAndTillPanel, InWordsPanel inWordsPanel)
+			throws FileNotFoundException, DocumentException {
 		this.infoPanel = infoPanel;
 		this.reasonPanel = reasonPanel;
 		this.commentsPanel = commentsPanel;
@@ -56,14 +56,14 @@ public class PdfCreator {
 		this.vatSummaryPanel = vatSummaryPanel;
 		this.reciepeAndTillPanel = reciepeAndTillPanel;
 		this.inWordsPanel = inWordsPanel;
-		// panels = new ArrayList<ProductPanel>();
 		panels = MainFrame.getProductPanels();
 		File file = new File(DEST);
 		file.getParentFile().mkdirs();
 		createPdf(DEST);
 	}
 
-	public void createPdf(String dest) throws IOException, DocumentException {
+	public void createPdf(String dest) throws FileNotFoundException, DocumentException {
+
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(dest));
 		document.open();
@@ -77,6 +77,7 @@ public class PdfCreator {
 		t.setWidthPercentage(100);
 
 		PdfPCell cell1 = new PdfPCell();
+
 		cell1.setVerticalAlignment(Element.ALIGN_BOTTOM);
 		Paragraph p = new Paragraph("mp.", new Font(FontFamily.HELVETICA, 4));
 		p.setAlignment(Element.ALIGN_RIGHT);
@@ -85,10 +86,12 @@ public class PdfCreator {
 
 		PdfPTable t2 = new PdfPTable(1);
 		PdfPCell cell2 = new PdfPCell(t2);
-		PdfPCell cell3 = new PdfPCell(new Phrase(
-				infoPanel.getCity() + "                                                                                  " + infoPanel.getTimeSpinner(), polishFont3));
+		PdfPCell cell3 = new PdfPCell(new Phrase(infoPanel.getCity()
+				+ "                                                                                  "
+				+ infoPanel.getTimeSpinner(), polishFont3));
 		PdfPCell cell4 = new PdfPCell(
-				new Phrase(infoPanel.getLblProtocol() + "                            " + infoPanel.getProtocolNumber(),polishFont3));
+				new Phrase(infoPanel.getLblProtocol() + "                            " + infoPanel.getProtocolNumber(),
+						polishFont3));
 		PdfPCell cell5 = new PdfPCell(
 				new Phrase(reasonPanel.getLblReason() + " : " + reasonPanel.getReasonComboBox(), polishFont3));
 		t2.addCell(cell4);
@@ -96,9 +99,9 @@ public class PdfCreator {
 		t2.addCell(cell5);
 		t.addCell(cell1);
 		t.addCell(cell2);
-
 		PdfPTable t3 = new PdfPTable(10);
-		t3.setWidths(new float[] { 6, 50, 8, 8, 8, 25, 25, 8, 25, 25 });
+
+		t3.setWidths(new int[] { 6, 50, 8, 8, 8, 25, 25, 8, 25, 25 });
 		t3.setWidthPercentage(100);
 		PdfPCell pdfPCell1 = new PdfPCell(new Phrase(productPanelLabels.getOrdinalNumber(), polishFont2));
 		pdfPCell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -132,11 +135,11 @@ public class PdfCreator {
 		t3.addCell(pdfPCell10);
 
 		PdfPTable t4 = new PdfPTable(10);
-		t4.setWidths(new float[] { 6, 50, 8, 8, 8, 25, 25, 8, 25, 25 });
+		t4.setWidths(new int[] { 6, 50, 8, 8, 8, 25, 25, 8, 25, 25 });
 		t4.setWidthPercentage(100);
 		for (int a = 0; a < 7; a++) {
 			t4.addCell(panels.get(a).getOrdinalNumber().getText());
-			t4.addCell(new Phrase(panels.get(a).getProductName().getText(),polishFont4));
+			t4.addCell(new Phrase(panels.get(a).getProductName().getText(), polishFont4));
 			t4.addCell("   ");
 			t4.addCell(panels.get(a).getUnitOfMeasure().getText());
 			t4.addCell(panels.get(a).getQuantity().getText());
@@ -160,18 +163,18 @@ public class PdfCreator {
 		}
 
 		PdfPTable t5 = new PdfPTable(3);
-		t5.setWidths(new float[] { 80, 25, 83 });
+		t5.setWidths(new int[] { 80, 25, 83 });
 		t5.setWidthPercentage(100);
 
 		PdfPTable t51 = new PdfPTable(1);
 		PdfPCell cell51a = new PdfPCell(
 				new Phrase(commentsPanel.getTxtpnComments() + " " + commentsPanel.getComments(), polishFont3));
-		cell51a.setFixedHeight(55);
-		// t51.addCell(commentsPanel.getTxtpnComments() + " " +
-		// commentsPanel.getComments());
+		cell51a.setFixedHeight(55); //
+		t51.addCell(commentsPanel.getTxtpnComments() + " " + //
+				commentsPanel.getComments());
 		PdfPCell cell51b = new PdfPCell();
 		cell51b.setVerticalAlignment(Element.ALIGN_MIDDLE);
-
+		
 		Paragraph p1 = new Paragraph(inWordsPanel.getValue() + "  " + inWordsPanel.getAmount(), polishFont3);
 		Paragraph p2 = new Paragraph(inWordsPanel.getInWordsLabel(), polishFont3);
 		Paragraph p3 = new Paragraph(inWordsPanel.getInWords(), polishFont3);
@@ -191,7 +194,7 @@ public class PdfCreator {
 		t5.addCell(cell52);
 		PdfPTable t52 = new PdfPTable(1);
 		PdfPTable t521 = new PdfPTable(4);
-		t521.setWidths(new float[] { 25, 8, 25, 25 });
+		t521.setWidths(new int[] { 25, 8, 25, 25 });
 		t521.addCell(vatSummaryPanel.getValueSummary().getText() + " ");
 		t521.addCell(vatSummaryPanel.getTaxPercent().getText() + " ");
 		t521.addCell(vatSummaryPanel.getTaxSummary().getText() + " ");
@@ -204,45 +207,51 @@ public class PdfCreator {
 		}
 		PdfPTable t522 = new PdfPTable(1);
 		PdfPTable t5221 = new PdfPTable(4);
-		t5221.setWidths(new float[] { 25, 8, 25, 25 });
-		t5221.addCell(vatSummaryPanel.getValueSummary().getText()+" ");
+		t5221.setWidths(new int[] { 25, 8, 25, 25 });
+		t5221.addCell(vatSummaryPanel.getValueSummary().getText() + " ");
 		t5221.addCell(" ");
-		t5221.addCell(vatSummaryPanel.getTaxSummary().getText()+" ");
-		t5221.addCell(vatSummaryPanel.getValueWithoutTaxSummary().getText()+" ");
+		t5221.addCell(vatSummaryPanel.getTaxSummary().getText() + " ");
+		t5221.addCell(vatSummaryPanel.getValueWithoutTaxSummary().getText() + " ");
 		t522.addCell(t5221);
-		Paragraph p5221 = new Paragraph("£¹czna wartoœæ protoko³u", polishFont3);
-		//doesn't work aligment to center/middle
+		Paragraph p5221 = new Paragraph("£¹czna wartoœæ protoko³u", polishFont3); 
+		// doesn't work aligment to center/middle
 		p5221.setAlignment(Element.ALIGN_MIDDLE);
-		
+
 		t522.addCell(p5221);
 		t52.addCell(t521);
 		t52.addCell(t522);
 		t5.addCell(t52);
-		
+
 		PdfPTable t6 = new PdfPTable(2);
-		t6.setWidths(new float [] {2,1});
+		t6.setWidths(new int[] { 2, 1 });
 		t6.setWidthPercentage(60);
 		t6.setHorizontalAlignment(Element.ALIGN_LEFT);
 		t6.addCell(new Phrase(totalSummary.getTxtpnDecreasingGrossSales(), polishFont3));
-		t6.addCell(new Phrase("kwota z³  "+totalSummary.getTotalValue(),polishFont3));
-		t6.addCell(new Phrase(totalSummary.getTxtpnDecreasingTax(),polishFont3));
-		t6.addCell(new Phrase("kwota z³  "+totalSummary.getTax(),polishFont3));
-		t6.addCell(new Phrase(totalSummary.getTxtpnDecreasingNetSales(),polishFont3));
-		t6.addCell(new Phrase("kwota z³  "+totalSummary.getNetValue(),polishFont3));
+		t6.addCell(new Phrase("kwota z³  " + totalSummary.getTotalValue(), polishFont3));
+		t6.addCell(new Phrase(totalSummary.getTxtpnDecreasingTax(), polishFont3));
+		t6.addCell(new Phrase("kwota z³  " + totalSummary.getTax(), polishFont3));
+		t6.addCell(new Phrase(totalSummary.getTxtpnDecreasingNetSales(), polishFont3));
+		t6.addCell(new Phrase("kwota z³  " + totalSummary.getNetValue(), polishFont3));
+
 		Paragraph br = new Paragraph(" ");
-		
+
 		PdfPTable t7 = new PdfPTable(2);
 		t7.setWidthPercentage(60);
 		t7.setHorizontalAlignment(Element.ALIGN_LEFT);
 		t7.addCell(new Phrase(reciepeAndTillPanel.getTxtpnReciepeAdded(), polishFont3));
-		t7.addCell(new Phrase(" "+reciepeAndTillPanel.getReciepeNr(), polishFont3));
+		t7.addCell(new Phrase(" " + reciepeAndTillPanel.getReciepeNr(), polishFont3));
 		t7.addCell(new Phrase(reciepeAndTillPanel.getTxtpnTillNr(), polishFont3));
-		t7.addCell(new Phrase(" "+reciepeAndTillPanel.getTillNr(), polishFont3));
+		t7.addCell(new Phrase(" " + reciepeAndTillPanel.getTillNr(), polishFont3));
 
-		Paragraph postedBy = new Paragraph ("Wystawi³:    ..........................................................      \n\nZatwierdzi³: ..........................................................",polishFont3);
+		Paragraph postedBy = new Paragraph(
+				"Wystawi³:    ..........................................................      \n\nZatwierdzi³: ..........................................................",
+				polishFont3);
+
 		document.add(t);
+
 		document.add(t3);
 		document.add(t4);
+
 		document.add(t5);
 		document.add(br);
 		document.add(br);
@@ -255,6 +264,7 @@ public class PdfCreator {
 		document.add(br);
 		document.add(br);
 		document.add(postedBy);
+
 		document.close();
 	}
 }
