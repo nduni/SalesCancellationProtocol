@@ -13,6 +13,7 @@ import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -29,6 +30,7 @@ public class CashiersManager {
 		this.inWordsPanel = inWordsPanel;
 		this.mainFrame = mainFrame;
 		JFrame frame = new JFrame();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -114,9 +116,7 @@ public class CashiersManager {
 			ObjectOutputStream stream = new ObjectOutputStream(fout);
 			stream.writeObject(model);
 			fout.close();
-
-			// inWordsPanel.redrawList();
-			System.out.println("saved");
+			JOptionPane.showMessageDialog(null, "Zapisano");
 		} catch (Exception e) {
 			e.printStackTrace();
 			;

@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.itextpdf.text.DocumentException;
 
@@ -48,14 +50,25 @@ public class LastButtonPanel extends JPanel{
 			saveToPdf.setBounds(10, 10, 130, 20);
 			saveToPdf.addActionListener(new ActionListener() { 
 				  public void actionPerformed(ActionEvent e) { 
+					  JFileChooser dialog = new JFileChooser();
+					 
+			           int dialogResult = dialog.showSaveDialog(null);
+			           
+						     
+			            if (dialogResult==JFileChooser.APPROVE_OPTION){
+			                String filePath = dialog.getSelectedFile().getPath();
+			                if (!filePath.endsWith(".pdf")){
+			                	filePath += ".pdf";
+			                }
 					  try {
-							PdfCreator pdf = new PdfCreator(infoPanel, reasonPanel, commentsPanel, productPanelLabels, totalSummary, vatSummaryPanel, reciepeAndTillPanel, inWordsPanel);
+							PdfCreator pdf = new PdfCreator(filePath, infoPanel, reasonPanel, commentsPanel, productPanelLabels, totalSummary, vatSummaryPanel, reciepeAndTillPanel, inWordsPanel);
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						} catch (DocumentException e1) {
 							e1.printStackTrace();
 						}
-					  } 
+			            }
+				  }
 					} );
 			add(saveToPdf);
 		}

@@ -1,9 +1,10 @@
 package document;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import com.itextpdf.text.Document;
@@ -28,13 +29,13 @@ import ui.panels.ReciepeAndTillPanel;
 import ui.panels.TotalSummaryPanel;
 import ui.panels.VatSummaryPanel;
 import ui.panels.ProductPanel.ProductPanel;
-import ui.panels.ReasonInfoPanel.ReasonInfoPanel;
+import ui.panels.ReasonInfoPanel.ReasonInfoPanel; 
 
 public class PdfCreator {
 
 	public static ArrayList<ProductPanel> panels;
 
-	public static final String DEST = "results/tables/simple_table.pdf";
+	//public static final String DEST = "results/tables/simple_table.pdf";
 	private MainInfoPanel infoPanel;
 	private ReasonInfoPanel reasonPanel;
 	private CommentsPanel commentsPanel;
@@ -44,7 +45,17 @@ public class PdfCreator {
 	private ReciepeAndTillPanel reciepeAndTillPanel;
 	private InWordsPanel inWordsPanel;
 
-	public PdfCreator(MainInfoPanel infoPanel, ReasonInfoPanel reasonPanel, CommentsPanel commentsPanel,
+	private String companyName;
+
+	private String companyStreet;
+
+	private String companyCity;
+
+	private String companyPostalCode;
+
+	private String companyNip;
+
+	public PdfCreator(String filePath, MainInfoPanel infoPanel, ReasonInfoPanel reasonPanel, CommentsPanel commentsPanel,
 			ProductPanelLabels productPanelLabels, TotalSummaryPanel totalSummary, VatSummaryPanel vatSummaryPanel,
 			ReciepeAndTillPanel reciepeAndTillPanel, InWordsPanel inWordsPanel)
 			throws FileNotFoundException, DocumentException {
@@ -57,13 +68,13 @@ public class PdfCreator {
 		this.reciepeAndTillPanel = reciepeAndTillPanel;
 		this.inWordsPanel = inWordsPanel;
 		panels = MainFrame.getProductPanels();
-		File file = new File(DEST);
-		file.getParentFile().mkdirs();
-		createPdf(DEST);
+		//File file = new File(DEST);
+		//file.getParentFile().mkdirs();
+		createPdf(filePath);
 	}
 
 	public void createPdf(String dest) throws FileNotFoundException, DocumentException {
-
+		
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(dest));
 		document.open();
@@ -77,10 +88,27 @@ public class PdfCreator {
 		t.setWidthPercentage(100);
 
 		PdfPCell cell1 = new PdfPCell();
-
+		
 		cell1.setVerticalAlignment(Element.ALIGN_BOTTOM);
 		Paragraph p = new Paragraph("mp.", new Font(FontFamily.HELVETICA, 4));
 		p.setAlignment(Element.ALIGN_RIGHT);
+		readCompanyData();
+		Paragraph companyNameParagraph = new Paragraph(companyName, polishFont2);
+		Paragraph companyStreetParagraph = new Paragraph(companyStreet, polishFont2);
+		Paragraph companyPostalCodeParagraph = new Paragraph(companyPostalCode, polishFont2);
+		Paragraph companyCityParagraph = new Paragraph(companyCity, polishFont2);
+		Paragraph companyNipParagraph = new Paragraph(companyNip, polishFont2);
+		companyNameParagraph.setAlignment(Element.ALIGN_CENTER);
+		companyStreetParagraph.setAlignment(Element.ALIGN_CENTER);
+		companyPostalCodeParagraph.setAlignment(Element.ALIGN_CENTER);
+		companyCityParagraph.setAlignment(Element.ALIGN_CENTER);
+		companyNipParagraph.setAlignment(Element.ALIGN_CENTER);
+		cell1.addElement(companyNameParagraph);
+		cell1.addElement(companyStreetParagraph);
+		cell1.addElement(companyPostalCodeParagraph);
+		cell1.addElement(companyCityParagraph);
+		cell1.addElement(companyNipParagraph);
+
 		cell1.addElement(p);
 		cell1.setFixedHeight(75);
 
@@ -190,7 +218,7 @@ public class PdfCreator {
 		t5.addCell(t51);
 
 		PdfPCell cell52 = new PdfPCell(new Phrase(commentsPanel.getTxtpnTaxSummary(), polishFont3));
-		cell52.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	//	cell52.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		t5.addCell(cell52);
 		PdfPTable t52 = new PdfPTable(1);
 		PdfPTable t521 = new PdfPTable(4);
@@ -244,7 +272,7 @@ public class PdfCreator {
 		t7.addCell(new Phrase(" " + reciepeAndTillPanel.getTillNr(), polishFont3));
 
 		Paragraph postedBy = new Paragraph(
-				"Wystawi³:    ..........................................................      \n\nZatwierdzi³: ..........................................................",
+				"Zatwierdzi³:  "+inWordsPanel.getCashier(),
 				polishFont3);
 
 		document.add(t);
@@ -267,4 +295,26 @@ public class PdfCreator {
 
 		document.close();
 	}
+	private void readCompanyData(){
+		String[] list = new String[5];
+		try {
+			File file = new File("company.txt");
+		    BufferedReader br = new BufferedReader(new FileReader(file));
+		    
+		    int x = 0;
+		    for (String line = br.readLine(); line != null; line = br.readLine()) {
+		    	list[x]= line;
+		    	++x;
+		    }
+		    br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			;
+		}
+		companyName=list[0];
+		companyStreet=list[1];
+		companyPostalCode=list[2];
+		companyCity=list[3];
+		companyNip=list[4];
+}
 }

@@ -11,16 +11,17 @@ import javax.swing.JPanel;
 
 import ui.panels.InWordsPanel;
 import ui.panels.ReciepeAndTillPanel;
+
 public class MenuPanel extends JPanel {
 	private JFrame mainFrame;
 	private InWordsPanel inWords;
 	private ReciepeAndTillPanel ratPanel;
-	
+
 	public MenuPanel(JFrame mainFrame, InWordsPanel inWords, ReciepeAndTillPanel ratPanel) {
 		super();
 		this.mainFrame = mainFrame;
-		this.inWords=inWords;
-		this.ratPanel=ratPanel;
+		this.inWords = inWords;
+		this.ratPanel = ratPanel;
 		createComponents();
 	}
 
@@ -65,16 +66,32 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		settings.add(tillsManager);
+		
+		JMenuItem company = new JMenuItem("Dane firmy");
+		company.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enterCompanysData();				
+			}
+		});
+		
+		settings.add(company);
 
 		JMenu help = new JMenu("Pomoc");
 		menuBar.add(help);
 	}
 
-	private void manageCashierFrame() {
-		CashiersManager manager = new CashiersManager(mainFrame, inWords );
+	protected void enterCompanysData() {
+		Company company = new Company(mainFrame);
 	}
+
+	private void manageCashierFrame() {
+		CashiersManager manager = new CashiersManager(mainFrame, inWords);
+	}
+
 	private void openTillsManager() {
 		TillManager manager = new TillManager(mainFrame, ratPanel);
-		
+
 	}
 }
