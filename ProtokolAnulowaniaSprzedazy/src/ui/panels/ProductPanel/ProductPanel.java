@@ -1,14 +1,10 @@
 package ui.panels.ProductPanel;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import ui.MainFrame;
+import controller.ProductPanelController;
+import controller.ProductPanelListener;
 import ui.panels.InWordsPanel;
 import ui.panels.TotalSummaryPanel;
 import ui.panels.VatSummaryPanel;
@@ -27,8 +23,10 @@ public class ProductPanel extends JPanel {
 	private InWordsPanel inWordsPanel;
 	private TotalSummaryPanel totalSummaryPanel;
 	private BigDecimal valueToWord;
+	private ProductPanelController productPanelController; 
 	
-	public ProductPanel(VatSummaryPanel vatSummaryPanel, InWordsPanel inWordsPanel, TotalSummaryPanel totalSummaryPanel) {
+	public ProductPanel(VatSummaryPanel vatSummaryPanel, InWordsPanel inWordsPanel,
+			TotalSummaryPanel totalSummaryPanel) {
 		super();
 		this.vatSummaryPanel = vatSummaryPanel;
 		this.inWordsPanel = inWordsPanel;
@@ -38,6 +36,8 @@ public class ProductPanel extends JPanel {
 
 	private void createComponents() {
 		setLayout(null);
+		
+		this.productPanelController = new ProductPanelController(this);
 		ordinalNumber = new JTextField();
 		ordinalNumber.setBounds(10, 0, 25, 20);
 		ordinalNumber.setColumns(10);
@@ -51,42 +51,15 @@ public class ProductPanel extends JPanel {
 		unitOfMeasure.setColumns(10);
 
 		quantity = new JTextField();
-
-		quantity.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-
-				if (hasDouble(pricePerUnit) && hasDouble(quantity)) {
-					multiplication(quantity, pricePerUnit);
-				} else {
-					leaveEmptyFields();
-				}
-				summingupProductPanel();
-			}
-
-		});
-
+		ProductPanelListener textFieldListener = new ProductPanelListener(this);
+		
+		quantity.addFocusListener(textFieldListener);
+		quantity.addKeyListener(textFieldListener);
 		quantity.setBounds(240, 0, 25, 20);
 		quantity.setColumns(10);
 		pricePerUnit = new JTextField();
-		pricePerUnit.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-
-				if (hasDouble(pricePerUnit) && hasDouble(quantity)) {
-					multiplication(quantity, pricePerUnit);
-				} else {
-					leaveEmptyFields();
-				}
-				summingupProductPanel();
-				totalSummaryPanel.summarizeVat();
-				amountInWords();
-			}
-
-			
-		});
+		pricePerUnit.addFocusListener(textFieldListener);
+		pricePerUnit.addKeyListener(textFieldListener);
 
 		pricePerUnit.setBounds(265, 0, 60, 20);
 		pricePerUnit.setColumns(10);
@@ -117,59 +90,17 @@ public class ProductPanel extends JPanel {
 		add(valueWithoutTax);
 
 	}
-
-	public boolean hasDouble(JTextField jT) {
-		try {
-			double d = Double.parseDouble(jT.getText());
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
-
-	public void multiplication(JTextField jTF1, JTextField jTF2) {
-		BigDecimal d1 = new BigDecimal(jTF1.getText());
-		BigDecimal d2 = new BigDecimal(jTF2.getText());
-		//d1 = Double.parseDouble(jTF1.getText());
-		//d2 = Double.parseDouble(jTF2.getText());
-		BigDecimal value = d1.multiply(d2);
-		BigDecimal tax = new BigDecimal(1.23);
-		valueWithTax.setText(value.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-		taxPercent.setText("23");
-		valueWithoutTax.setText(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP).toString());
-		amountOfTax.setText(value.subtract(value.divide(tax, 2, BigDecimal.ROUND_HALF_UP)).toString());
-	}
-
-	private void amountInWords() {
-		String s = NumberInWords.convert(valueToWord);
-		inWordsPanel.setInWords(s);
-		inWordsPanel.setAmount(valueToWord.toString());
-		
-	}
-	private void leaveEmptyFields() {
-		valueWithTax.setText("");
-		amountOfTax.setText("");
-		valueWithoutTax.setText("");
-
-	}
-/**
-	public double getValueWithTax() {
-		if (hasDouble(valueWithTax)) {
-			return Double.parseDouble(valueWithTax.getText());
-		} else {
-			return 0.0;
-		}
-		}
-		*/
+	
 	public String getValueWithTax() {
-		if (hasDouble(valueWithTax)) {
+		if (productPanelController.hasDouble(valueWithTax)) {
 			return valueWithTax.getText();
 		} else {
 			return "";
 		}
 	}
+
 	public String getTaxPercent() {
-		if (hasDouble(taxPercent)) {
+		if (productPanelController.hasDouble(taxPercent)) {
 			return taxPercent.getText();
 		} else {
 			return "";
@@ -177,7 +108,7 @@ public class ProductPanel extends JPanel {
 	}
 
 	public String getAmountOfTax() {
-		if (hasDouble(amountOfTax)) {
+		if (productPanelController.hasDouble(amountOfTax)) {
 			return amountOfTax.getText();
 		} else {
 			return "";
@@ -221,45 +152,54 @@ public class ProductPanel extends JPanel {
 	}
 
 	public BigDecimal getValue() {
-		return valueToWord;
+		return getValueToWord();
 	}
 
 	public BigDecimal valueWithoutTax() {
-		if (hasDouble(valueWithoutTax)) {
+		if (productPanelController.hasDouble(valueWithoutTax)) {
 			return new BigDecimal(valueWithoutTax.getText());
 		} else {
 			return new BigDecimal(0.0);
 		}
 	}
-	
-	public void summingupProductPanel() {
-		ArrayList<ProductPanel> productPanels = new ArrayList<ProductPanel>();
-		productPanels = MainFrame.getProductPanels();
-		BigDecimal value =new BigDecimal(0.0);
-		BigDecimal tax = new BigDecimal(0.0);
-		BigDecimal net = new BigDecimal(0.0);
-		for (ProductPanel p : productPanels) {
-			try {
-				value = value.add(new BigDecimal(notNull(p.getValueWithTax())));
-				tax = tax.add(new BigDecimal(notNull(p.getAmountOfTax())));
-				net =net.add(p.valueWithoutTax());
-			} catch (NullPointerException e) {
-				
-			}
-		}
-		vatSummaryPanel.setValueSummary(String.valueOf(value));
-		vatSummaryPanel.setTaxSummary(String.valueOf(tax));
-		vatSummaryPanel.setValueWithoutTaxSummary(String.valueOf(net));
-		vatSummaryPanel.setTaxPercent(getTaxPercent());
-		this.valueToWord=value;
+
+	public void setQuantity(String quantity) {
+		this.quantity.setText(quantity);
 	}
 
-	private String notNull(String valueWithTax2) {
-			if (valueWithTax2.equals("")) {
-		return "0";
-			}
-			else {
-				return  valueWithTax2;
-			}
+	public void setPricePerUnit(String pricePerUnit) {
+		this.pricePerUnit.setText(pricePerUnit);
+	}
+
+	public void setValueWithTax(String valueWithTax) {
+		this.valueWithTax.setText(valueWithTax);
+	}
+
+	public void setTaxPercent(String taxPercent) {
+		this.taxPercent.setText(taxPercent);
+	}
+
+	public void setAmountOfTax(String amountOfTax) {
+		this.amountOfTax.setText(amountOfTax);
+	}
+
+	public void setValueWithoutTax(String valueWithoutTax) {
+		this.valueWithoutTax.setText(valueWithoutTax);
+	}
+
+	public BigDecimal getValueToWord() {
+		return valueToWord;
+	}
+
+	public void setValueToWord(BigDecimal valueToWord) {
+		this.valueToWord = valueToWord;
+	}
+
+	public ProductPanelController getProductPanelController() {
+		return productPanelController;
+	}
+
+	public void setProductPanelController(ProductPanelController productPanelController) {
+		this.productPanelController = productPanelController;
 	}
 }

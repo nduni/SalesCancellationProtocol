@@ -16,6 +16,9 @@ import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
+import ui.panels.ProductPanel.NumberInWords;
+import ui.panels.ProductPanel.ProductPanel;
+
 public class InWordsPanel extends JPanel {
 
 	private static ArrayList<String> cashiersList;
@@ -120,5 +123,5 @@ public class InWordsPanel extends JPanel {
 	public String getLblCashier() {
 		return lblCashier.getText();
 	}
-	
+
 }

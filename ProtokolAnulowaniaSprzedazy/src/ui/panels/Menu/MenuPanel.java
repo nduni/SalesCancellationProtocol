@@ -83,7 +83,7 @@ public class MenuPanel extends JPanel {
 	}
 
 	protected void enterCompanysData() {
-		Company company = new Company(mainFrame);
+		CompanyView company = new CompanyView(mainFrame);
 	}
 
 	private void manageCashierFrame() {

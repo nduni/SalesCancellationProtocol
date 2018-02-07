@@ -12,7 +12,7 @@ import com.itextpdf.text.DocumentException;
 import document.PdfCreator;
 import ui.panels.CommentsPanel;
 import ui.panels.InWordsPanel;
-import ui.panels.LastButtonPanel;
+import ui.panels.SaveAndPrintPanel;
 import ui.panels.MainInfoPanel;
 import ui.panels.ProductPanelLabels;
 import ui.panels.ReciepeAndTillPanel;
@@ -38,7 +38,7 @@ public class MainFrame {
 	private InWordsPanel inWordsPanel;
 	private ReciepeAndTillPanel reciepeAndTillPanel;
 	private ProductPanelLabels productPanelLabels;
-	private LastButtonPanel savePrintPanel;
+	private SaveAndPrintPanel savePrintPanel;
 	public MainFrame() throws IOException, DocumentException {
 		initialize();
 	}
@@ -68,7 +68,7 @@ public class MainFrame {
 		productPanelLabels = new ProductPanelLabels();
 		totalSummaryAndInWordsPanel = new JPanel();
 		totalSummary = new TotalSummaryPanel(vatSummaryPanel);
-		savePrintPanel = new LastButtonPanel(infoPanel, reasonPanel, commentsPanel, productPanelLabels, totalSummary, vatSummaryPanel, reciepeAndTillPanel, inWordsPanel);
+		savePrintPanel = new SaveAndPrintPanel(infoPanel, reasonPanel, commentsPanel, productPanelLabels, totalSummary, vatSummaryPanel, reciepeAndTillPanel, inWordsPanel);
 
 		menuBar.setBounds(0, 0, 400, 20);
 		frame.getContentPane().add(menuBar);

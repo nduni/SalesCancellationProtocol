@@ -18,8 +18,9 @@ import javax.swing.border.LineBorder;
 
 public class ReciepeAndTillPanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<String>  tillsList;
-	private JComboBox tillNr;
+	private JComboBox<String> tillNr;
 	private JTextPane txtpnReciepeAdded;
 	private JTextPane txtpnTillNr;
 	private JTextField reciepeNr;
