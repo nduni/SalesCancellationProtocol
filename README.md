@@ -11,7 +11,7 @@
  - Printing protocol
  - Saving to pdf.
  			
-+			
+			
 +Expanded to the basic version will be:
 +Downloading product names from a .csv file and autocompletion of names, units of measure, and unit price.
 +Cashiers and till number checkbox.
